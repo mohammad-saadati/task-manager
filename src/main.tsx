@@ -7,11 +7,13 @@ import { Provider } from "react-redux";
 import store from "./store/index";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/task-managment" element={<TaskManagment />} />
-      </Routes>
-    </BrowserRouter>
-  </Provider>
+  <React.StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/task-managment" element={<TaskManagment />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
+  </React.StrictMode>
 );

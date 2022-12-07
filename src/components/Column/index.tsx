@@ -17,16 +17,12 @@ const Column: FC<columnData> = ({ column, tasks, index }) => {
   };
 
   return (
-    <div className={`w-64 p-4 border ${columnBgColor}`}>
-      <div className={`${columnBgColor}`}>
-        <StrictModeDroppable
-          index={index}
-          column={column}
-          tasks={tasks}
-          backgroundCallback={onColumnDraggingOver}
-        />
-      </div>
-    </div>
+    <StrictModeDroppable
+      index={index}
+      column={column}
+      tasks={tasks}
+      backgroundCallback={onColumnDraggingOver}
+    />
   );
 };
 

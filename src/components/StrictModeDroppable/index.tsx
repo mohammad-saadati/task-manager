@@ -16,6 +16,7 @@ const StrictModeDroppable = ({
   index,
 }: columnData) => {
   const [enabled, setEnabled] = useState(false);
+
   useEffect(() => {
     const animation = requestAnimationFrame(() => setEnabled(true));
     return () => {
@@ -23,20 +24,30 @@ const StrictModeDroppable = ({
       setEnabled(false);
     };
   }, []);
+
   if (!enabled) {
     return null;
   }
+
   return (
     <Draggable draggableId={column.id} index={index}>
       {(provided) => (
-        <div {...provided.draggableProps} ref={provided.innerRef}>
+        <div
+          className="w-64 p-4 border bg-white m-2"
+          {...provided.draggableProps}
+          ref={provided.innerRef}
+        >
           <div {...provided.dragHandleProps}>{column.title}</div>
-          <Droppable droppableId={column.id} type="task">
+          <Droppable droppableId={column.id}>
             {(provided, snapshot) => {
               backgroundCallback(snapshot.isDraggingOver);
 
               return (
-                <div ref={provided.innerRef} {...provided.droppableProps}>
+                <div
+                  className="min-h-column grow"
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                >
                   <TaskList tasks={tasks} />
                   {provided.placeholder}
                 </div>
