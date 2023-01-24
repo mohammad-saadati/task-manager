@@ -1,12 +1,13 @@
+import { FC } from "react";
 import { useAppSelector } from "../../store/hooks";
 
-const Modal = () => {
+const Modal: FC = () => {
   const modalIsOpen = useAppSelector((state) => state.modal.modalIsOpen);
 
   if (modalIsOpen) {
     return <div>this is modal component {modalIsOpen}</div>;
   } else {
-    return "";
+    return <></>;
   }
 };
 
