@@ -3,8 +3,16 @@ import Column from "../components/Column";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import React, { useState, useEffect } from "react";
 import StrictModeDroppableSingle from "../components/StrictModeDroppableSingle";
+import { useGetCurrentUserQuery } from "../store/thunks/index";
+import { useAppDispatch } from '../store/hooks'
+import { setCurrentUser } from '../store/features/currentUser'
 
 const TaskManagment = () => {
+  const { data, error, isLoading } = useGetCurrentUserQuery('');
+  const dispatch = useAppDispatch()
+
+  if(!isLoading) dispatch(setCurrentUser(data))
+
   const [enabled, setEnabled] = useState(false);
   const [boardData, setBoardData] = useState(initialData);
 
@@ -91,7 +99,8 @@ const TaskManagment = () => {
   // const onDragUpdate = (initial: any, provided: any) => {
   //   console.log(initial, provided);
   // };
-
+  if(isLoading) return (<div>current user if fetching</div>)
+  else
   return (
     <div className="flex">
       <DragDropContext onDragEnd={onDragEnd}>
