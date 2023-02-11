@@ -1,23 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import "./index.css";
-import TaskManagment from "./views/TaskManagment";
-import Test from "./views/Test";
 import { Provider } from "react-redux";
 import store from "./store/index";
-import Modal from "./components/Modal";
+import App from "./App";
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <Routes>
-          <Route path="/task-managment" element={<TaskManagment />} />
-          <Route path="/test" element={<Test />} />
-        </Routes>
+        <App />
       </BrowserRouter>
-      <Modal />
     </Provider>
   </React.StrictMode>
 );
