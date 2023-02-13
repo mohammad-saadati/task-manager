@@ -1,18 +1,22 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "./utils/axios";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
 function App() {
   const [user, setUser] = useState(null);
+  const location = useLocation();
 
   const getUser = async () => {
+    if (location.pathname === "/login") return;
     try {
-      const url = `${process.env.REACT_APP_API_URL}/auth/login/success`;
-      const { data } = await axios.get(url, { withCredentials: true });
-      setUser(data.user._json);
+      const url = `${
+        import.meta.env.VITE_REACT_APP_API_URL
+      }/auth/login/success`;
+      const res = await api.get(url, { withCredentials: true });
+      if (res) if (res?.data?.user) setUser(res.data.user);
     } catch (err) {
       console.log(err);
     }
