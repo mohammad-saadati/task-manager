@@ -6,5 +6,18 @@ const api = axios.create({
   // headers: { "X-Custom-Header": "foobar" },
 });
 
+api.interceptors.response.use(
+  function (response) {
+    // console.log("interceptor", response);
+    return response;
+  },
+  function (error) {
+    // console.log("interceptor", error);
+    if (error?.response?.status === 403) {
+      window.location.replace("/login");
+      return error.response;
+    }
+  }
+);
 
-export default api
+export default api;
