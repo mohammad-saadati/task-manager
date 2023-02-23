@@ -12,11 +12,14 @@ api.interceptors.response.use(
     return response;
   },
   function (error) {
-    // console.log("interceptor", error);
+    // error includes CORS erros
+    console.log("interceptor", error);
     if (error?.response?.status === 403) {
+      console.log("error?.response?.status", error.response.status);
       window.location.replace("/login");
       return error.response;
     }
+    return error.response;
   }
 );
 
