@@ -16,7 +16,9 @@ function App() {
         import.meta.env.VITE_REACT_APP_API_URL
       }/auth/login/success`;
       const res = await api.get(url, { withCredentials: true });
-      if (res) if (res?.data?.user) setUser(res.data.user);
+      if (res) setUser((prevState) => ({ ...prevState, ...res.data.user }));
+      console.log("res.data.user", res.data.user);
+      console.log("user", user);
     } catch (err) {
       console.log(err);
     }
