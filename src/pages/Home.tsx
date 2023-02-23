@@ -1,12 +1,14 @@
 import { FC } from "react";
 import { userDetails } from "../Types/props";
-
+import Canvas from "../components/CanvasBoard";
+import TaskManagment from "./TaskManagment";
 interface homeData {
-  userDetails: userDetails;
+  userDetails: any;
 }
 
 const Home: FC<homeData> = ({ userDetails }) => {
-  const user = userDetails.user;
+  const user = userDetails;
+  console.log(userDetails);
   const logout = () => {
     window.open(
       `${import.meta.env.VITE_REACT_APP_API_URL}/auth/logout`,
@@ -15,9 +17,9 @@ const Home: FC<homeData> = ({ userDetails }) => {
   };
   return (
     <div>
-      <h1>home page</h1>
-      <div>welcome {user.name}</div>
+      <div>welcome {user.username}</div>
       <div onClick={logout}>log out</div>
+      <TaskManagment />
     </div>
   );
 };
