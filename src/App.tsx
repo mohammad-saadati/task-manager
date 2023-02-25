@@ -12,10 +12,8 @@ function App() {
   const getUser = async () => {
     if (location.pathname === "/login") return;
     try {
-      const url = `${
-        import.meta.env.VITE_REACT_APP_API_URL
-      }/auth/login/success`;
-      const res = await api.get(url, { withCredentials: true });
+      const url = `/auth/login/success`;
+      const res = await api.get(url);
       if (res) setUser((prevState) => ({ ...prevState, ...res.data.user }));
       console.log("res.data.user", res.data.user);
       console.log("user", user);
