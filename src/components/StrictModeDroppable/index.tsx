@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import { Droppable, Draggable, DroppableProps } from "react-beautiful-dnd";
 import TaskList from "../TaskList";
-
+// types
+import { Column } from "../../mock/initialData";
+// icons
+import AddIcon from "@mui/icons-material/Add";
+// style
+import "./index.css";
+import api from "../../utils/axios";
 interface columnData {
   tasks: { id: string; content: string }[];
-  column: { id: string; title: string; taskIds: string[] };
+  column: Column;
   backgroundCallback: (isDraggingOver: boolean) => void;
   index: number;
 }
@@ -28,16 +34,33 @@ const StrictModeDroppable = ({
   if (!enabled) {
     return null;
   }
+  const addTask = async () => {
+    try {
+      // const url = `/auth/login/success`;
+      // const res = await api.get(url);
+     
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <Draggable draggableId={column.id} index={index}>
       {(provided) => (
         <div
-          className="w-64 p-4 border bg-white m-2"
+          className="column-bar w-64 p-4 bg-white m-2"
           {...provided.draggableProps}
           ref={provided.innerRef}
         >
-          <div {...provided.dragHandleProps}>{column.title}</div>
+          <div
+            className="flex justify-between items-center pb-2"
+            {...provided.dragHandleProps}
+          >
+            <div>{column.title}</div>
+            <div className="column-add" onClick={addTask}>
+              <AddIcon className="text-[#D3D1CB]" />
+            </div>
+          </div>
           <Droppable droppableId={column.id}>
             {(provided, snapshot) => {
               backgroundCallback(snapshot.isDraggingOver);
