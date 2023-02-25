@@ -1,9 +1,11 @@
 import { FC, useState } from "react";
 import TaskList from "../TaskList";
 import StrictModeDroppable from "../StrictModeDroppable";
+// types
+import { Column as ColumnType } from "../../mock/initialData";
 interface columnData {
   tasks: { id: string; content: string }[];
-  column: { id: string; title: string; taskIds: string[] };
+  column: ColumnType;
   index: number;
 }
 
