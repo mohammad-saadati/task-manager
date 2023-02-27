@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "./utils/axios";
+import DefaultLayout from "./layouts/default"
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -28,19 +29,21 @@ function App() {
 
   return (
     <div className="container">
-      <Routes>
-        <Route
-          path="/"
-          element={
-            user ? <Home userDetails={user} /> : <Navigate to="/login" />
-          }
-        />
-        <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
-        <Route
-          path="/signup"
-          element={user ? <Navigate to="/" /> : <Signup />}
-        />
-      </Routes>
+      <DefaultLayout>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              user ? <Home userDetails={user} /> : <Navigate to="/login" />
+            }
+          />
+          <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
+          <Route
+            path="/signup"
+            element={user ? <Navigate to="/" /> : <Signup />}
+          />
+        </Routes>
+      </DefaultLayout>
     </div>
   );
 }
