@@ -12,7 +12,7 @@ const defaultLayout: FC<Props> = ({ children }) => {
     <div>
       <Appbar />
       <Sidebar />
-      <div>{children}</div>
+      <div className="py-20 px-6">{children}</div>
     </div>
   );
 };
