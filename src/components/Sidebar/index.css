@@ -1,0 +1,6 @@
+.board-add {
+  visibility: hidden;
+}
+.board-bar:hover .board-add {
+  visibility: visible;
+}
