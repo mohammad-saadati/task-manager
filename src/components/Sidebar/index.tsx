@@ -1,19 +1,22 @@
 import { Box, Drawer } from "@mui/material";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { closeDrawer } from "../../store/features/drawer";
+import Content from "./content";
 
 const Sidebar = () => {
   const dispatcher = useAppDispatch();
-  const modalIsOpen = useAppSelector((state) => state.drawer.drawerIsOpen);
+  const drawerState = useAppSelector((state) => state.drawer);
 
   return (
     <Box>
       <Drawer
         anchor="left"
-        open={modalIsOpen}
+        open={drawerState.drawerIsOpen}
         onClose={() => dispatcher(closeDrawer())}
+        variant="temporary"
+        sx={{ maxWidth: drawerState.drawerWidth }}
       >
-        emtpy drawer
+        <Content />
       </Drawer>
     </Box>
   );
