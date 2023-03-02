@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import api from "./utils/axios";
 import DefaultLayout from "./layouts/default"
 import Home from "./pages/Home";
+import Board from "./pages/Board";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
@@ -35,6 +36,12 @@ function App() {
             path="/"
             element={
               user ? <Home userDetails={user} /> : <Navigate to="/login" />
+            }
+          />
+          <Route
+            path="/board/:id"
+            element={
+              user ? <Board /> : <Navigate to="/login" />
             }
           />
           <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
