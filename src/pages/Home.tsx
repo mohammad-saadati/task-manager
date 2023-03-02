@@ -8,7 +8,7 @@ interface homeData {
 
 const Home: FC<homeData> = ({ userDetails }) => {
   const user = userDetails;
-  console.log(userDetails);
+
   const logout = () => {
     window.open(
       `${import.meta.env.VITE_REACT_APP_API_URL}/auth/logout`,
@@ -18,7 +18,9 @@ const Home: FC<homeData> = ({ userDetails }) => {
   return (
     <div>
       <div>welcome {user.username}</div>
-      <div onClick={logout}>log out</div>
+      <div className="inline" onClick={logout}>
+        log out
+      </div>
       <TaskManagment />
     </div>
   );
