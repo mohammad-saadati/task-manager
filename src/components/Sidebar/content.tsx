@@ -19,6 +19,7 @@ import "./index.css";
 
 const Content = () => {
   const [boards, setBoards] = useState([]);
+  const [title, setTitle] = useState("Untitled");
 
   const getData = useCallback(async () => {
     try {
@@ -33,7 +34,19 @@ const Content = () => {
       console.log(err);
     }
   }, []);
-  const addColumn = () => {};
+  const addColumn = async () => {
+    try {
+      const url = `/boards`;
+      const res = await api.post(url, { title });
+      const { data } = res;
+      // if (res) setUser((prevState) => ({ ...prevState, ...res.data.user }));
+      console.log("res", res);
+
+      setBoards([...boards, data.board]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     getData();
@@ -50,7 +63,11 @@ const Content = () => {
           >
             <Box className="flex justify-between items-center">
               Boards
-              <IconButton aria-label="delete" className="p-0 w-7 h-7 board-add cursor-pointer" onClick={addColumn}>
+              <IconButton
+                aria-label="delete"
+                className="p-0 w-7 h-7 board-add cursor-pointer"
+                onClick={addColumn}
+              >
                 <AddIcon className="text-[#D3D1CB]" />
               </IconButton>
             </Box>
@@ -59,12 +76,12 @@ const Content = () => {
       >
         {boards.length ? (
           boards.map((board) => (
-            <Link to="/">
+            <Link to={`board/${board._id}`} key={board._id}>
               <ListItemButton>
                 <ListItemIcon>
-                  <DashboardOutlinedIcon />
+                  <DashboardOutlinedIcon sx={{ minWidth: 30 }} />
                 </ListItemIcon>
-                <ListItemText primary="board one" />
+                <ListItemText primary={board?.title} />
               </ListItemButton>
             </Link>
           ))
