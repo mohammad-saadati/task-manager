@@ -2,16 +2,20 @@ import { Link } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
 import {
   Box,
+  Button,
   IconButton,
   List,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   ListSubheader,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 // icons
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import AddIcon from "@mui/icons-material/Add";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 //
 import api from "../../utils/axios";
 // css
@@ -20,6 +24,7 @@ import "./index.css";
 const Content = () => {
   const [boards, setBoards] = useState([]);
   const [title, setTitle] = useState("Untitled");
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const getData = useCallback(async () => {
     try {
@@ -47,6 +52,8 @@ const Content = () => {
       console.log(err);
     }
   };
+  const handleContextMenu = () => {};
+  const handleClose = () => {};
 
   useEffect(() => {
     getData();
@@ -82,6 +89,23 @@ const Content = () => {
                   <DashboardOutlinedIcon sx={{ minWidth: 30 }} />
                 </ListItemIcon>
                 <ListItemText primary={board?.title} />
+
+                <Button id="basic-button" onClick={handleContextMenu}>
+                  <MoreHorizIcon className="text-[#0f172a]" />
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                </Menu>
               </ListItemButton>
             </Link>
           ))
