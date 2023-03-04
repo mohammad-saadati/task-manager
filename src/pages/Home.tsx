@@ -17,11 +17,10 @@ const Home: FC<homeData> = ({ userDetails }) => {
   };
   return (
     <div>
-      <div>welcome {user.username}</div>
       <div className="inline" onClick={logout}>
         log out
       </div>
-      <TaskManagment />
+      {/* <TaskManagment /> */}
     </div>
   );
 };
