@@ -6,11 +6,15 @@ import {
   IconButton,
   Button,
 } from "@mui/material";
+//
 import MenuIcon from "@mui/icons-material/Menu";
 import { useAppDispatch } from "../../store/hooks";
 import { openDrawer, closeDrawer } from "../../store/features/drawer";
+//
+import { useAppSelector } from "../../store/hooks";
 
 const Appbar = () => {
+  const user = useAppSelector((state) => state.currentUser);
   const dispatcher = useAppDispatch();
 
   const drawerHanlder = () => {
@@ -32,7 +36,7 @@ const Appbar = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            username
+            <div>{user.username}</div>
           </Typography>
         </Toolbar>
       </AppBar>
