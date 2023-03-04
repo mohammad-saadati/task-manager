@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
 import {
   Box,
@@ -16,6 +16,8 @@ import {
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 //
 import api from "../../utils/axios";
 // css
@@ -25,6 +27,9 @@ const Content = () => {
   const [boards, setBoards] = useState([]);
   const [title, setTitle] = useState("Untitled");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [open, setOpen] = useState(false);
+
+  // const { id } = useParams();
 
   const getData = useCallback(async () => {
     try {
@@ -52,8 +57,29 @@ const Content = () => {
       console.log(err);
     }
   };
-  const handleContextMenu = () => {};
-  const handleClose = () => {};
+  const handleContextMenu = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setAnchorEl(e.currentTarget);
+    setOpen(true);
+  };
+  const handleClose = async (boardID) => {
+    setOpen(false);
+  };
+  const handleDelete = async (boardId) => {
+    try {
+      const url = `/boards/${boardId}`;
+      const res = await api.delete(url);
+      const { board } = res.data;
+      console.log(board, res)
+      setBoards(current => {
+        return current.filter(item => item._id !== board._id )
+      })
+      setOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     getData();
@@ -94,6 +120,7 @@ const Content = () => {
                   <MoreHorizIcon className="text-[#0f172a]" />
                 </Button>
                 <Menu
+                  elevation={1}
                   id="basic-menu"
                   anchorEl={anchorEl}
                   open={open}
@@ -102,9 +129,14 @@ const Content = () => {
                     "aria-labelledby": "basic-button",
                   }}
                 >
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                  <MenuItem onClick={() => handleDelete(board._id)}>
+                    <DeleteOutlineIcon sx={{ marginRight: 1 }} />
+                    Delete
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <DriveFileRenameOutlineIcon sx={{ marginRight: 1 }} />
+                    Rename
+                  </MenuItem>
                 </Menu>
               </ListItemButton>
             </Link>
