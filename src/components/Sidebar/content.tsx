@@ -80,6 +80,15 @@ const Content = () => {
       console.log(error);
     }
   };
+  const handleRename = async (boardId, index) => {
+    try {
+      const url = `/boards/${boardId}`;
+      const res = await api.put(url, { title: name });
+
+      if (!res.data.error) {
+        const { board } = res.data;
+        setBoards((current) => {
+          const temp = [...current];
 
   useEffect(() => {
     getData();
