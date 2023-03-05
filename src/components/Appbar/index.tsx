@@ -14,7 +14,7 @@ import { openDrawer, closeDrawer } from "../../store/features/drawer";
 import { useAppSelector } from "../../store/hooks";
 
 const Appbar = () => {
-  const user = useAppSelector((state) => state.currentUser);
+  const user = useAppSelector((state) => state.currentUser.currentUser);
   const dispatcher = useAppDispatch();
 
   const drawerHanlder = () => {
