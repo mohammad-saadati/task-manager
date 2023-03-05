@@ -11,6 +11,7 @@ import {
   ListSubheader,
   Menu,
   MenuItem,
+  TextField,
 } from "@mui/material";
 // icons
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
@@ -28,6 +29,8 @@ const Content = () => {
   const [title, setTitle] = useState("Untitled");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [name, setName] = useState("");
 
   // const { id } = useParams();
 
@@ -64,6 +67,8 @@ const Content = () => {
     setOpen(true);
   };
   const handleClose = async (boardID) => {
+    try {
+    } catch (error) {}
     setOpen(false);
   };
   const handleDelete = async (boardId) => {
@@ -71,10 +76,10 @@ const Content = () => {
       const url = `/boards/${boardId}`;
       const res = await api.delete(url);
       const { board } = res.data;
-      console.log(board, res)
-      setBoards(current => {
-        return current.filter(item => item._id !== board._id )
-      })
+      console.log(board, res);
+      setBoards((current) => {
+        return current.filter((item) => item._id !== board._id);
+      });
       setOpen(false);
     } catch (error) {
       console.log(error);
@@ -89,6 +94,16 @@ const Content = () => {
         const { board } = res.data;
         setBoards((current) => {
           const temp = [...current];
+          temp.splice(index, 1, board);
+          return [...temp];
+        });
+        console.log("*******************************", board);
+        setIsEditing(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     getData();
@@ -117,13 +132,28 @@ const Content = () => {
         }
       >
         {boards.length ? (
-          boards.map((board) => (
+          boards.map((board, index) => (
             <Link to={`board/${board._id}`} key={board._id}>
               <ListItemButton>
                 <ListItemIcon>
                   <DashboardOutlinedIcon sx={{ minWidth: 30 }} />
                 </ListItemIcon>
-                <ListItemText primary={board?.title} />
+                {isEditing ? (
+                  <TextField
+                    id="standard-basic"
+                    label=""
+                    variant="standard"
+                    value={name}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                    }}
+                    onKeyPress={(e) =>
+                      e.key === "Enter" && handleRename(board._id, index)
+                    }
+                  />
+                ) : (
+                  <ListItemText primary={board?.title} />
+                )}
 
                 <Button id="basic-button" onClick={handleContextMenu}>
                   <MoreHorizIcon className="text-[#0f172a]" />
