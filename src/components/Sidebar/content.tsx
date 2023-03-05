@@ -133,7 +133,13 @@ const Content = () => {
                     <DeleteOutlineIcon sx={{ marginRight: 1 }} />
                     Delete
                   </MenuItem>
-                  <MenuItem onClick={handleClose}>
+                  <MenuItem
+                    onClick={() => {
+                      setName(board.title);
+                      setIsEditing(true);
+                      setOpen(false);
+                    }}
+                  >
                     <DriveFileRenameOutlineIcon sx={{ marginRight: 1 }} />
                     Rename
                   </MenuItem>
