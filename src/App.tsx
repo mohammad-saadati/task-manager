@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import api from "./utils/axios";
 import DefaultLayout from "./layouts/default";
 import Home from "./pages/Home";
@@ -11,22 +11,32 @@ import { setCurrentUser } from "./store/features/currentUser";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
   const dispatch = useAppDispatch();
 
-  const getUser = async () => {
-    if (location.pathname === "/login") return;
+  const getUser = useCallback(async () => {
+    if (location.pathname === "/login" || loading) return;
+
+    setLoading(true);
+
     try {
       const url = `/auth/login/success`;
       const res = await api.get(url);
-      if (res) setUser((prevState) => ({ ...prevState, ...res.data.user }));
-      console.log("user after setUser", user);
-      dispatch(setCurrentUser(user));
+      console.log("**************", res, res.data, res.data.error);
+      if (!res.data.error) {
+        setUser((prevState) => ({ ...prevState, ...res.data.user }));
+        dispatch(setCurrentUser(res.data.user));
+      } else {
+        window.location.pathname === "/login";
+      }
       console.log("res.data.user", res.data.user);
     } catch (err) {
-      console.log(err);
+      console.log("getUser", err);
+    } finally {
+      setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     getUser();
