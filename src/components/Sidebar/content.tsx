@@ -40,8 +40,6 @@ const Content = () => {
       const res = await api.get(url);
       const { data } = res;
       // if (res) setUser((prevState) => ({ ...prevState, ...res.data.user }));
-      console.log("res", res);
-
       setBoards(data.boards);
     } catch (err) {
       console.log(err);
@@ -76,7 +74,6 @@ const Content = () => {
       const url = `/boards/${boardId}`;
       const res = await api.delete(url);
       const { board } = res.data;
-      console.log(board, res);
       setBoards((current) => {
         return current.filter((item) => item._id !== board._id);
       });
@@ -97,7 +94,6 @@ const Content = () => {
           temp.splice(index, 1, board);
           return [...temp];
         });
-        console.log("*******************************", board);
         setIsEditing(false);
       }
     } catch (error) {
