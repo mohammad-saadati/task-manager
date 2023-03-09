@@ -47,8 +47,20 @@ function App() {
     <div className="container">
       <DefaultLayout>
         <Routes>
-          <Route path="/" element={<Home userDetails={user} />} />
-          <Route path="/board/:id" element={<Board />} />
+          <Route
+            path="/"
+            element={
+              user ? <Home userDetails={user} /> : <Navigate to="/login" />
+            }
+          />
+          <Route
+            path="/board/:id"
+            element={user ? <Board /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/signup"
+            element={user ? <Signup /> : <Navigate to="/login" />}
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<NoMatch />} />
