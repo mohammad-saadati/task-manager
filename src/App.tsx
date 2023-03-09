@@ -52,6 +52,7 @@ function App() {
           <Route path="/board/:id" element={<Board />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="*" element={<NoMatch />} />
         </Routes>
       </DefaultLayout>
     </div>
