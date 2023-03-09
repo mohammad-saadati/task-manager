@@ -27,8 +27,6 @@ function App() {
       if (!res.data.error) {
         setUser({ ...res.data.user });
         dispatch(setCurrentUser(res.data.user));
-      } else {
-        window.location.pathname === "/login";
       }
       console.log("res.data.user", res.data.user);
     } catch (err) {
