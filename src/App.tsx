@@ -40,7 +40,8 @@ function App() {
     getUser();
   }, []);
 
-  if (!user && loading) return <div>Loading ...</div>;
+  if ((!user || loading) && window.location.pathname !== "/login")
+    return <div>Loading ...</div>;
 
   return (
     <div className="container">
