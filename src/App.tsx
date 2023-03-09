@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Board from "./pages/Board";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import NoMatch from "./pages/NoMatch";
 import { useAppDispatch } from "./store/hooks";
 import { setCurrentUser } from "./store/features/currentUser";
 
@@ -62,7 +63,6 @@ function App() {
             element={user ? <Signup /> : <Navigate to="/login" />}
           />
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </DefaultLayout>
