@@ -25,7 +25,7 @@ function App() {
       const res = await api.get(url);
       console.log("**************", res, res.data, res.data.error);
       if (!res.data.error) {
-        setUser((prevState) => ({ ...prevState, ...res.data.user }));
+        setUser({ ...res.data.user });
         dispatch(setCurrentUser(res.data.user));
       } else {
         window.location.pathname === "/login";
