@@ -46,14 +46,16 @@ const Appbar = () => {
             <div>{user.username}</div>
           </Typography>
 
-          <Button
-            sx={{ color: "white" }}
-            onClick={logout}
-            variant="text"
-            startIcon={<LogoutIcon />}
-          >
-            log out
-          </Button>
+          {Object.keys(user).length !== 0 ? 
+            <Button
+              sx={{ color: "white" }}
+              onClick={logout}
+              variant="text"
+              startIcon={<LogoutIcon />}
+            >
+              log out
+            </Button>
+           : null}
         </Toolbar>
       </AppBar>
     </Box>
