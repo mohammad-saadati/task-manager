@@ -21,7 +21,7 @@ const Board = () => {
     getData();
   }, [getData]);
 
-  return <div>Board Page</div>;
+  return <div></div>;
 };
 
 export default Board;

@@ -33,6 +33,7 @@ const Content = () => {
   const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("");
+  const [activeIndex, setActiveIndex] = useState<null | number>(null);
 
   // const { id } = useParams();
 
@@ -60,11 +61,13 @@ const Content = () => {
       console.log(err);
     }
   };
-  const handleContextMenu = (e: React.MouseEvent<HTMLElement>) => {
+  const handleContextMenu = (e: React.MouseEvent<HTMLElement>, index) => {
     e.preventDefault();
     e.stopPropagation();
     setAnchorEl(e.currentTarget);
     setOpen(true);
+    setActiveIndex(index);
+    setName(boards[index].title);
   };
   const handleClose = async (boardID) => {
     try {
@@ -131,12 +134,12 @@ const Content = () => {
       >
         {boards.length ? (
           boards.map((board, index) => (
-            <Link to={`board/${board._id}`} key={board._id}>
+            <Link to={`board/${board._id}`} key={index}>
               <ListItemButton>
                 <ListItemIcon>
                   <DashboardOutlinedIcon sx={{ minWidth: 30 }} />
                 </ListItemIcon>
-                {isEditing ? (
+                {isEditing && activeIndex === index ? (
                   <TextField
                     id="standard-basic"
                     label=""
@@ -153,7 +156,10 @@ const Content = () => {
                   <ListItemText primary={board?.title} />
                 )}
 
-                <Button id="basic-button" onClick={handleContextMenu}>
+                <Button
+                  id="basic-button"
+                  onClick={(e) => handleContextMenu(e, index)}
+                >
                   <MoreHorizIcon className="text-[#0f172a]" />
                 </Button>
                 <Menu
@@ -172,7 +178,6 @@ const Content = () => {
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
-                      setName(board.title);
                       setIsEditing(true);
                       setOpen(false);
                     }}
