@@ -12,7 +12,6 @@ const Login: FC = () => {
 
   return (
     <div>
-      <Button variant="contained">Hello World</Button>
       <h1>Sign in</h1>
       <form action="/login/password" method="post">
         <div>
