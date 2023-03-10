@@ -12,6 +12,7 @@ import { useAppDispatch } from "../../store/hooks";
 import { openDrawer, closeDrawer } from "../../store/features/drawer";
 //
 import { useAppSelector } from "../../store/hooks";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Appbar = () => {
   const user = useAppSelector((state) => state.currentUser.currentUser);
@@ -19,6 +20,12 @@ const Appbar = () => {
 
   const drawerHanlder = () => {
     dispatcher(openDrawer());
+  };
+  const logout = () => {
+    window.open(
+      `${import.meta.env.VITE_REACT_APP_API_URL}/auth/logout`,
+      "_self"
+    );
   };
 
   return (
@@ -38,6 +45,15 @@ const Appbar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <div>{user.username}</div>
           </Typography>
+
+          <Button
+            sx={{ color: "white" }}
+            onClick={logout}
+            variant="text"
+            startIcon={<LogoutIcon />}
+          >
+            log out
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
