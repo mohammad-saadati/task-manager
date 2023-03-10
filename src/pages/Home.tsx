@@ -9,15 +9,7 @@ interface homeData {
 const Home: FC<homeData> = ({ userDetails }) => {
   const user = userDetails;
 
-  ;
-  return (
-    <div>
-      <div className="inline" onClick={logout}>
-        log out
-      </div>
-      {/* <TaskManagment /> */}
-    </div>
-  );
+  return <div>{/* <TaskManagment /> */}</div>;
 };
 
 export default Home;
