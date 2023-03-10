@@ -23,8 +23,10 @@ import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutli
 import api from "../../utils/axios";
 // css
 import "./index.css";
+import { useAppSelector } from "../../store/hooks";
 
 const Content = () => {
+  const user = useAppSelector((state) => state.currentUser.currentUser);
   const [boards, setBoards] = useState([]);
   const [title, setTitle] = useState("Untitled");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -102,7 +104,7 @@ const Content = () => {
   };
 
   useEffect(() => {
-    getData();
+    if (Object.keys(user).length !== 0) getData();
   }, [getData]);
 
   return (
