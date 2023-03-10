@@ -41,6 +41,7 @@ function App() {
   }, []);
 
   if (loading) return <div>Loading ...</div>;
+  if (Object.keys(currentUser).length === 0) <Navigate to="/login" />;
 
   return (
     <div className="container">

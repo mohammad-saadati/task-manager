@@ -16,6 +16,7 @@ api.interceptors.response.use(
     // error includes CORS erros
     console.log("interceptor", error);
     if (error?.response?.status === 403) {
+      window.location.href = "/login";
       console.log("error?.response?.status", error.response.status);
       return error.response;
     }
