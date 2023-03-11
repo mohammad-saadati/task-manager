@@ -1,8 +1,16 @@
 import { FC } from "react";
 import axios from "../utils/axios";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
+// icons
+import GoogleIcon from "@mui/icons-material/Google";
+//
+import { useLocation } from "react-router-dom";
 
 const Login: FC = () => {
+  const location = useLocation();
+
+  console.log(location);
+
   const googleAuth = () => {
     window.open(
       `${import.meta.env.VITE_REACT_APP_API_URL}/auth/google/callback`,
@@ -11,34 +19,15 @@ const Login: FC = () => {
   };
 
   return (
-    <div>
-      <h1>Sign in</h1>
-      <form action="/login/password" method="post">
-        <div>
-          <label htmlFor="username">Username</label>
-          <input
-            id="username"
-            name="username"
-            type="text"
-            autoComplete="username"
-            required
-            autoFocus
-          />
-        </div>
-        <div>
-          <label htmlFor="current-password">Password</label>
-          <input
-            id="current-password"
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            required
-          />
-        </div>
-        <button type="submit">Sign in</button>
-      </form>
-      <button type="button" onClick={googleAuth}>
-        Login with google
+    <div className="flex flex-col justify-center items-center">
+      <h1 className="text-5xl font-bold">Log in</h1>
+      <button
+        className="flex justify-center items-center"
+        type="button"
+        onClick={googleAuth}
+      >
+        <GoogleIcon fontSize="small" color="primary" />
+        Continue with Goggle
       </button>
     </div>
   );
