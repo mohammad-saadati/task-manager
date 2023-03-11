@@ -44,7 +44,7 @@ function App() {
   if (Object.keys(currentUser).length === 0) <Navigate to="/login" />;
 
   return (
-    <div className="container">
+    <div className="">
       <DefaultLayout>
         <Routes>
           <Route
