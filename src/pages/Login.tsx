@@ -20,15 +20,13 @@ const Login: FC = () => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <h1 className="text-5xl font-bold">Log in</h1>
-      <button
-        className="flex justify-center items-center"
-        type="button"
-        onClick={googleAuth}
+      <h1 className="text-5xl font-bold mb-10">Log in</h1>
+      <Button
+        variant="outlined"
+        startIcon={<GoogleIcon fontSize="small" color="primary" />}
       >
-        <GoogleIcon fontSize="small" color="primary" />
-        Continue with Goggle
-      </button>
+        Continue with Google
+      </Button>
     </div>
   );
 };
