@@ -22,6 +22,7 @@ const Login: FC = () => {
     <div className="flex flex-col justify-center items-center">
       <h1 className="text-5xl font-bold mb-10">Log in</h1>
       <Button
+        onClick={googleAuth}
         variant="outlined"
         startIcon={<GoogleIcon fontSize="small" color="primary" />}
       >
