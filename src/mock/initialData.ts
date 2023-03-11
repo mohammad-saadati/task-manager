@@ -15,7 +15,7 @@ export interface Column {
 }
 export interface boardMockData2 {
   columns: Column[];
-  columnOrder: string[];
+  columnsOrder: string[];
 }
 
 const initialData: boardMockData = {
@@ -77,7 +77,7 @@ export const initialData2: boardMockData2 = {
       tasksOrder: ["task-7", "task-8", "task-9"],
     },
   ],
-  columnOrder: ["column-1", "column-2", "column-3"],
+  columnsOrder: ["column-1", "column-2", "column-3"],
 };
 
 export default initialData;
