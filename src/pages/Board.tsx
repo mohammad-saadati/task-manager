@@ -1,9 +1,12 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../utils/axios";
+import TaskManagment from "../components/TaskManagment";
 
 const Board = () => {
   const [board, setBoard] = useState({});
+  const [columns, setColumns] = useState([]);
+
   let { id } = useParams();
 
   const getData = useCallback(async () => {
@@ -21,7 +24,11 @@ const Board = () => {
     getData();
   }, [getData]);
 
-  return <div></div>;
+  return (
+    <div>
+      {Object.keys(board).length ? <TaskManagment boardData={board} /> : null}
+    </div>
+  );
 };
 
 export default Board;
