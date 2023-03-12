@@ -9,15 +9,19 @@ import StrictModeDroppableSingle from "../StrictModeDroppableSingle";
 import { useGetCurrentUserQuery } from "../../store/thunks/index";
 import { useAppDispatch } from "../../store/hooks";
 import { setCurrentUser } from "../../store/features/currentUser";
+//
+import { Button } from "@mui/material";
+// icons
+import AddIcon from "@mui/icons-material/Add";
 
-const TaskManagment = () => {
+const TaskManagment = ({ boardData }) => {
   // const { data, error, isLoading } = useGetCurrentUserQuery("");
   const dispatch = useAppDispatch();
 
   // if (!isLoading) dispatch(setCurrentUser(data));
 
   const [enabled, setEnabled] = useState(false);
-  const [boardData, setBoardData] = useState(initialData2);
+  // const [boardData, setBoardData] = useState(initialData2);
 
   const onDragEnd = (result: any) => {
     const { destination, source, draggableId, type } = result;
@@ -126,6 +130,9 @@ const TaskManagment = () => {
             );
           })}
         </StrictModeDroppableSingle>
+        <Button variant="outlined">
+          <AddIcon />
+        </Button>
       </DragDropContext>
     </div>
   );
