@@ -1,28 +1,38 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../index";
 
+export interface Task {
+  id: string;
+  content: string;
+}
+export interface Column {
+  id: string;
+  title: string;
+  tasks: Task[];
+  tasksOrder: string[];
+}
 interface BoardState {
-  columns: Array<string>;
-  cards: {};
+  columns: Column[];
+  columnsOrder: string[];
 }
 
 const initialState: BoardState = {
-  columns: ['test'],
-  cards: {},
+  columns: [],
+  columnsOrder: [],
 };
 
 export const boardSlice = createSlice({
   name: "board",
   initialState,
   reducers: {
-    increment: (state) => {
-      state.columns.push('column-1');
+    addColumns: (state, payload) => {
+      state.columns.push(payload.data);
     },
   },
 });
 
-export const { increment } = boardSlice.actions;
+export const { addColumns } = boardSlice.actions;
 
-export const selectCount = (state: RootState) => state.board.cards;
+export const board = (state: RootState) => state.board;
 
 export default boardSlice.reducer;
