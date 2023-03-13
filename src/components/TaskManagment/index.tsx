@@ -6,15 +6,25 @@ import Column from "../Column";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import React, { useState, useEffect } from "react";
 import StrictModeDroppableSingle from "../StrictModeDroppableSingle";
+// store
 import { useGetCurrentUserQuery } from "../../store/thunks/index";
 import { useAppDispatch } from "../../store/hooks";
 import { setCurrentUser } from "../../store/features/currentUser";
 //
-import { Button } from "@mui/material";
+import { Button, Menu, MenuItem, TextField } from "@mui/material";
 // icons
 import AddIcon from "@mui/icons-material/Add";
+//
+import api from "../../utils/axios";
+// router
+import { useParams } from "react-router-dom";
 
 const TaskManagment = ({ boardData }) => {
+  let { id } = useParams();
+  const [loadingColumn, setLoadingColumn] = useState(false);
+  const [colName, setColName] = useState("");
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
   // const { data, error, isLoading } = useGetCurrentUserQuery("");
   const dispatch = useAppDispatch();
 
@@ -105,6 +115,31 @@ const TaskManagment = ({ boardData }) => {
       }
     });
   };
+  const openMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const createColumn = async () => {
+    if (loadingColumn) return;
+    setLoadingColumn(true);
+    console.log("boardData", boardData);
+    try {
+      const url = `/columns`;
+      const res = await api.post(url, {
+        name: colName,
+        boardId: id,
+      });
+      const { data } = res;
+      console.log("column created", data);
+      // if (res) setUser((prevState) => ({ ...prevState, ...res.data.user }));
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoadingColumn(false);
+    }
+  };
 
   return (
     <div className="flex">
@@ -114,25 +149,42 @@ const TaskManagment = ({ boardData }) => {
             const column = boardData.columns.find(
               (col) => col.id === columnId
             ) as ColumnType;
-            const tasks = column.tasksOrder.map((order) => {
+            const tasks = column?.tasksOrder.map((order) => {
               return column.tasks.find((task) => {
                 return task.id === order;
               });
             });
 
-            return (
+            return column ? (
               <Column
                 index={index}
                 key={column.id}
                 column={column}
                 tasks={tasks}
               />
-            );
+            ) : null;
           })}
         </StrictModeDroppableSingle>
-        <Button variant="outlined">
+        <Button variant="outlined" onClick={openMenu}>
           <AddIcon />
         </Button>
+        <Menu open={open} anchorEl={anchorEl} onClose={handleClose}>
+          <MenuItem>
+            <TextField
+              label=""
+              variant="standard"
+              value={colName}
+              onChange={(e) => setColName(e.target.value)}
+            />
+            <Button
+              onClick={createColumn}
+              sx={{ marginLeft: 2 }}
+              variant="contained"
+            >
+              create
+            </Button>
+          </MenuItem>
+        </Menu>
       </DragDropContext>
     </div>
   );
