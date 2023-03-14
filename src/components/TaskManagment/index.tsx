@@ -158,7 +158,7 @@ const TaskManagment = ({ boardData }) => {
             return column ? (
               <Column
                 index={index}
-                key={column.id}
+                key={column._id}
                 column={column}
                 tasks={tasks}
               />
