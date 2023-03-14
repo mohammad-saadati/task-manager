@@ -165,9 +165,11 @@ const TaskManagment = ({ boardData }) => {
             ) : null;
           })}
         </StrictModeDroppableSingle>
-        <Button variant="outlined" onClick={openMenu}>
-          <AddIcon />
-        </Button>
+        <div className="py-4">
+          <Button variant="outlined" onClick={openMenu}>
+            <AddIcon />
+          </Button>
+        </div>
         <Menu open={open} anchorEl={anchorEl} onClose={handleClose}>
           <MenuItem>
             <TextField
