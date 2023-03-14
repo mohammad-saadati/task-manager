@@ -128,7 +128,7 @@ const TaskManagment = ({ boardData }) => {
     try {
       const url = `/columns`;
       const res = await api.post(url, {
-        name: colName,
+        title: colName,
         boardId: id,
       });
       const { data } = res;
