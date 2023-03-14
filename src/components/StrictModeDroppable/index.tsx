@@ -38,14 +38,13 @@ const StrictModeDroppable = ({
     try {
       // const url = `/auth/login/success`;
       // const res = await api.get(url);
-     
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   return (
-    <Draggable draggableId={column.id} index={index}>
+    <Draggable draggableId={column._id} index={index}>
       {(provided) => (
         <div
           className="column-bar w-64 p-4 bg-white m-2"
@@ -61,7 +60,7 @@ const StrictModeDroppable = ({
               <AddIcon className="text-[#D3D1CB]" />
             </div>
           </div>
-          <Droppable droppableId={column.id}>
+          <Droppable droppableId={column._id}>
             {(provided, snapshot) => {
               backgroundCallback(snapshot.isDraggingOver);
 
