@@ -142,7 +142,7 @@ const TaskManagment = ({ boardData }) => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex items-start">
       <DragDropContext onDragEnd={onDragEnd}>
         <StrictModeDroppableSingle>
           {boardData.columnsOrder.map((columnId: string, index) => {
