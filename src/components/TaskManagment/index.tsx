@@ -147,7 +147,7 @@ const TaskManagment = ({ boardData }) => {
         <StrictModeDroppableSingle>
           {boardData.columnsOrder.map((columnId: string, index) => {
             const column = boardData.columns.find(
-              (col) => col.id === columnId
+              (col) => col._id === columnId
             ) as ColumnType;
             const tasks = column?.tasksOrder.map((order) => {
               return column.tasks.find((task) => {
