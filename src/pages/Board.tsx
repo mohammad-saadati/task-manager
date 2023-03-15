@@ -30,11 +30,7 @@ const Board = () => {
     getData();
   }, [getData]);
 
-  return (
-    <div>
-      {Object.keys(board).length ? <TaskManagment boardData={board} /> : null}
-    </div>
-  );
+  return <div>{Object.keys(board).length ? <TaskManagment /> : null}</div>;
 };
 
 export default Board;
