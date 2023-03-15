@@ -8,7 +8,7 @@ import React, { useState, useEffect } from "react";
 import StrictModeDroppableSingle from "../StrictModeDroppableSingle";
 // store
 import { useGetCurrentUserQuery } from "../../store/thunks/index";
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setCurrentUser } from "../../store/features/currentUser";
 //
 import { Button, Menu, MenuItem, TextField } from "@mui/material";
@@ -19,7 +19,7 @@ import api from "../../utils/axios";
 // router
 import { useParams } from "react-router-dom";
 
-const TaskManagment = ({ boardData }) => {
+const TaskManagment = () => {
   let { id } = useParams();
   const [loadingColumn, setLoadingColumn] = useState(false);
   const [colName, setColName] = useState("");
@@ -27,6 +27,7 @@ const TaskManagment = ({ boardData }) => {
   const open = Boolean(anchorEl);
   // const { data, error, isLoading } = useGetCurrentUserQuery("");
   const dispatch = useAppDispatch();
+  const boardData = useAppSelector((state) => state.board);
 
   // if (!isLoading) dispatch(setCurrentUser(data));
 
@@ -154,6 +155,8 @@ const TaskManagment = ({ boardData }) => {
                 return task.id === order;
               });
             });
+
+            console.log("column", column);
 
             return column ? (
               <Column
