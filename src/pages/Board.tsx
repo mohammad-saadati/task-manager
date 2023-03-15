@@ -1,10 +1,14 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { initialboard } from "../store/features/board";
 import api from "../utils/axios";
 import TaskManagment from "../components/TaskManagment";
 
 const Board = () => {
-  const [board, setBoard] = useState({});
+  const dispatcher = useAppDispatch();
+  const board = useAppSelector((state) => state.board);
+  // const [board, setBoard] = useState({});
   const [columns, setColumns] = useState([]);
 
   let { id } = useParams();
@@ -16,7 +20,9 @@ const Board = () => {
       const { data } = res;
       console.log("res", res);
 
-      setBoard(data.board);
+      // setBoard(data.board);
+      dispatcher(initialboard(data.board));
+      console.log(board);
     } catch (error) {}
   }, []);
 
