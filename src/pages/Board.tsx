@@ -18,11 +18,8 @@ const Board = () => {
       const url = `/boards/${id}`;
       const res = await api.get(url);
       const { data } = res;
-      console.log("res", res);
-
       // setBoard(data.board);
       dispatcher(initialboard(data.board));
-      console.log(board);
     } catch (error) {}
   }, []);
 
@@ -30,7 +27,12 @@ const Board = () => {
     getData();
   }, [getData]);
 
-  return <div>{Object.keys(board).length ? <TaskManagment /> : null}</div>;
+  return (
+    <div>
+      {Object.keys(board).length}
+      {Object.keys(board).length ? <TaskManagment /> : null}
+    </div>
+  );
 };
 
 export default Board;

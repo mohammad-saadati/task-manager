@@ -28,7 +28,7 @@ const TaskManagment = () => {
   // const { data, error, isLoading } = useGetCurrentUserQuery("");
   const dispatch = useAppDispatch();
   const boardData = useAppSelector((state) => state.board);
-
+  console.log("boardData", boardData);
   // if (!isLoading) dispatch(setCurrentUser(data));
 
   const [enabled, setEnabled] = useState(false);
@@ -125,7 +125,6 @@ const TaskManagment = () => {
   const createColumn = async () => {
     if (loadingColumn) return;
     setLoadingColumn(true);
-    console.log("boardData", boardData);
     try {
       const url = `/columns`;
       const res = await api.post(url, {
@@ -133,7 +132,6 @@ const TaskManagment = () => {
         boardId: id,
       });
       const { data } = res;
-      console.log("column created", data);
       // if (res) setUser((prevState) => ({ ...prevState, ...res.data.user }));
     } catch (err) {
       console.log(err);
