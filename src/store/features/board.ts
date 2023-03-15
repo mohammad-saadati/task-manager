@@ -25,13 +25,11 @@ export const boardSlice = createSlice({
   name: "board",
   initialState,
   reducers: {
-    initialboard: (state, payload) => {
-      console.log("initialboard", payload.payload);
-      state = payload.payload;
-      console.log("initialboard", state);
+    initialboard: (state, action) => {
+      return { ...state, ...action.payload };
     },
-    addColumns: (state, payload) => {
-      state.columns.push(payload.data);
+    addColumns: (state, action) => {
+      // state.columns.push(payload.data);
     },
   },
 });
