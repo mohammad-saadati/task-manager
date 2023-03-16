@@ -27,12 +27,7 @@ const Board = () => {
     getData();
   }, [getData]);
 
-  return (
-    <div>
-      {Object.keys(board).length}
-      {Object.keys(board).length ? <TaskManagment /> : null}
-    </div>
-  );
+  return <div>{Object.keys(board).length ? <TaskManagment /> : null}</div>;
 };
 
 export default Board;
