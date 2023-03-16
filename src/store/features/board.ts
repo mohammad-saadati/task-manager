@@ -29,12 +29,15 @@ export const boardSlice = createSlice({
       return { ...state, ...action.payload };
     },
     addColumns: (state, action) => {
-      // state.columns.push(payload.data);
+      state.columns.push(action.payload);
+    },
+    addColumnsOrder: (state, action) => {
+      state.columnsOrder.push(action.payload);
     },
   },
 });
 
-export const { initialboard, addColumns } = boardSlice.actions;
+export const { initialboard, addColumns, addColumnsOrder } = boardSlice.actions;
 
 export const board = (state: RootState) => state.board;
 
