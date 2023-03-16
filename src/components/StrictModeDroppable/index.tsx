@@ -5,6 +5,10 @@ import TaskList from "../TaskList";
 import { Column } from "../../mock/initialData";
 // icons
 import AddIcon from "@mui/icons-material/Add";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { Menu, MenuItem } from "@mui/material";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 // style
 import "./index.css";
 import api from "../../utils/axios";
@@ -21,7 +25,11 @@ const StrictModeDroppable = ({
   backgroundCallback,
   index,
 }: columnData) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [open, setOpen] = useState(false);
   const [enabled, setEnabled] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [name, setName] = useState("");
 
   useEffect(() => {
     const animation = requestAnimationFrame(() => setEnabled(true));
@@ -42,6 +50,19 @@ const StrictModeDroppable = ({
       console.log(err);
     }
   };
+  const handleContextMenu = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setAnchorEl(e.currentTarget);
+    setOpen(true);
+    setName(column.title);
+  };
+  const handleDelete = () => {
+    
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Draggable draggableId={column._id} index={index}>
@@ -57,7 +78,26 @@ const StrictModeDroppable = ({
           >
             <div>{column.title}</div>
             <div className="column-add" onClick={addTask}>
+              <MoreHorizIcon
+                onClick={(e) => handleContextMenu(e)}
+                className="text-[#D3D1CB]"
+              />
               <AddIcon className="text-[#D3D1CB]" />
+              <Menu
+                elevation={1}
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem onClick={() => handleDelete(column._id)}>
+                  <DeleteOutlineIcon sx={{ marginRight: 1 }} />
+                  Delete
+                </MenuItem>
+              </Menu>
             </div>
           </div>
           <Droppable droppableId={column._id}>
