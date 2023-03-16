@@ -10,6 +10,7 @@ import StrictModeDroppableSingle from "../StrictModeDroppableSingle";
 import { useGetCurrentUserQuery } from "../../store/thunks/index";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setCurrentUser } from "../../store/features/currentUser";
+import { addColumns, addColumnsOrder } from "../../store/features/board";
 //
 import { Button, Menu, MenuItem, TextField } from "@mui/material";
 // icons
@@ -26,10 +27,9 @@ const TaskManagment = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   // const { data, error, isLoading } = useGetCurrentUserQuery("");
-  const dispatch = useAppDispatch();
+  const dispatcher = useAppDispatch();
   const boardData = useAppSelector((state) => state.board);
-  console.log("boardData", boardData);
-  // if (!isLoading) dispatch(setCurrentUser(data));
+  // if (!isLoading) er(setCurrentUser(data));
 
   const [enabled, setEnabled] = useState(false);
   // const [boardData, setBoardData] = useState(initialData2);
@@ -132,6 +132,10 @@ const TaskManagment = () => {
         boardId: id,
       });
       const { data } = res;
+
+      dispatcher(addColumns(data.column));
+      dispatcher(addColumnsOrder(data.column._id));
+
       // if (res) setUser((prevState) => ({ ...prevState, ...res.data.user }));
     } catch (err) {
       console.log(err);
