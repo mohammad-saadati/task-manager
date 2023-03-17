@@ -34,10 +34,26 @@ export const boardSlice = createSlice({
     addColumnsOrder: (state, action) => {
       state.columnsOrder.push(action.payload);
     },
+    removeFromColumns: (state, action) => {
+      const index = state.columns.findIndex((col) => {
+        // console.log('removeFromColumns', col._id, action.payload)
+        return col._id === action.payload;
+      });
+      state.columns.splice(index, 1);
+    },
+    removeFromColumnsOrder: (state, action) => {
+      state.columnsOrder.push(action.payload);
+    },
   },
 });
 
-export const { initialboard, addColumns, addColumnsOrder } = boardSlice.actions;
+export const {
+  initialboard,
+  addColumns,
+  addColumnsOrder,
+  removeFromColumns,
+  removeFromColumnsOrder,
+} = boardSlice.actions;
 
 export const board = (state: RootState) => state.board;
 
