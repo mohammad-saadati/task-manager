@@ -12,6 +12,13 @@ import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutli
 // style
 import "./index.css";
 import api from "../../utils/axios";
+// store
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import {
+  removeFromColumns,
+  removeFromColumnsOrder,
+} from "../../store/features/board";
+
 interface columnData {
   tasks: { id: string; content: string }[];
   column: Column;
@@ -30,6 +37,8 @@ const StrictModeDroppable = ({
   const [enabled, setEnabled] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const dispatcher = useAppDispatch();
 
   useEffect(() => {
     const animation = requestAnimationFrame(() => setEnabled(true));
@@ -57,8 +66,22 @@ const StrictModeDroppable = ({
     setOpen(true);
     setName(column.title);
   };
-  const handleDelete = () => {
-    
+  const handleDelete = async () => {
+    if (loading) return;
+    setLoading(true);
+
+    try {
+      const url = `/columns/${column._id}`;
+      const res = await api.delete(url);
+      const { data } = res;
+
+      dispatcher(removeFromColumns(column._id));
+      dispatcher(removeFromColumnsOrder(column._id));
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   };
   const handleClose = () => {
     setOpen(false);
@@ -93,7 +116,7 @@ const StrictModeDroppable = ({
                   "aria-labelledby": "basic-button",
                 }}
               >
-                <MenuItem onClick={() => handleDelete(column._id)}>
+                <MenuItem onClick={handleDelete}>
                   <DeleteOutlineIcon sx={{ marginRight: 1 }} />
                   Delete
                 </MenuItem>
