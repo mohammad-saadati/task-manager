@@ -158,8 +158,6 @@ const TaskManagment = () => {
               });
             });
 
-            console.log("column", column);
-
             return column ? (
               <Column
                 index={index}
