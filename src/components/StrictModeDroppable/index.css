@@ -4,3 +4,10 @@
 .column-bar:hover .column-add {
   visibility: visible;
 } */
+.column-title {
+  padding: 4px;
+  border-radius: 5px;
+}
+.column-title:hover {
+  background: #F1F0EF;
+}
