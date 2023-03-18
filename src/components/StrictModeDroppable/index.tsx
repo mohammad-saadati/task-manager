@@ -6,7 +6,7 @@ import { Column } from "../../mock/initialData";
 // icons
 import AddIcon from "@mui/icons-material/Add";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { Menu, MenuItem } from "@mui/material";
+import { Button, Menu, MenuItem, TextField } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 // style
@@ -17,6 +17,8 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   removeFromColumns,
   removeFromColumnsOrder,
+  updateColumns,
+  updateColumnsOrder,
 } from "../../store/features/board";
 
 interface columnData {
@@ -33,11 +35,16 @@ const StrictModeDroppable = ({
   index,
 }: columnData) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [renameAnchorEl, setRenameAnchorEl] = useState<null | HTMLElement>(
+    null
+  );
   const [open, setOpen] = useState(false);
   const [enabled, setEnabled] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("");
+  const [colName, setColName] = useState("");
   const [loading, setLoading] = useState(false);
+  const openRenameMenu = Boolean(renameAnchorEl);
   const dispatcher = useAppDispatch();
 
   useEffect(() => {
@@ -86,6 +93,40 @@ const StrictModeDroppable = ({
   const handleClose = () => {
     setOpen(false);
   };
+  const renameColumn = async () => {
+    if (loading) return;
+    setLoading(true);
+    try {
+      const url = `/columns/${column._id}`;
+      const res = await api.put(url, { title: colName });
+      const { data } = res;
+
+      dispatcher(updateColumns(data.column));
+      // dispatcher(updateColumnsOrder(data.column._id));
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const createTask = async () => {
+    if (loading) return;
+    setLoading(true);
+    try {
+      const url = `/tasks`;
+      const res = await api.post(url, {
+        columnId: column._id,
+        title: "Untitled",
+      });
+      const { data } = res;
+
+      dispatcher(updateColumns(data.column));
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Draggable draggableId={column._id} index={index}>
@@ -99,13 +140,52 @@ const StrictModeDroppable = ({
             className="flex justify-between items-center pb-2"
             {...provided.dragHandleProps}
           >
-            <div>{column.title}</div>
+            <div>
+              <div
+                className="column-title"
+                onClick={(e) => {
+                  setRenameAnchorEl(e.currentTarget);
+                  setColName(column.title);
+                }}
+              >
+                {column.title}
+              </div>
+              <Menu
+                id="basic-menu"
+                anchorEl={renameAnchorEl}
+                open={openRenameMenu}
+                onClose={(e) => setRenameAnchorEl(null)}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem>
+                  <TextField
+                    variant="standard"
+                    value={colName}
+                    onChange={(e) => {
+                      setColName(e.target.value);
+                    }}
+                    onKeyDown={(e: KeyboardEvent) => {
+                      e.stopPropagation();
+                    }}
+                  />
+                  <Button
+                    onClick={renameColumn}
+                    sx={{ marginLeft: 2 }}
+                    variant="contained"
+                  >
+                    done
+                  </Button>
+                </MenuItem>
+              </Menu>
+            </div>
             <div className="column-add" onClick={addTask}>
               <MoreHorizIcon
                 onClick={(e) => handleContextMenu(e)}
                 className="text-[#D3D1CB]"
               />
-              <AddIcon className="text-[#D3D1CB]" />
+              <AddIcon className="text-[#D3D1CB]" onClick={createTask} />
               <Menu
                 elevation={1}
                 id="basic-menu"
