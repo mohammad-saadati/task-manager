@@ -37,7 +37,7 @@ const TaskList: FC<TaskListProps> = ({ tasks }) => {
               {...provided.dragHandleProps}
               ref={provided.innerRef}
             >
-              {task.content}
+              {task.title}
             </div>
           )}
         </Draggable>
