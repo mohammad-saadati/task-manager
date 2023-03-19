@@ -45,6 +45,7 @@ export const boardSlice = createSlice({
       state.columnsOrder.push(action.payload);
     },
     updateColumns: (state, action) => {
+      console.log(action);
       const index = state.columns.findIndex(
         (col) => col._id === action.payload._id
       );
@@ -66,7 +67,7 @@ export const {
   removeFromColumns,
   removeFromColumnsOrder,
   updateColumns,
-  updateColumnsOrder,
+  // updateColumnsOrder,
 } = boardSlice.actions;
 
 export const board = (state: RootState) => state.board;
