@@ -36,7 +36,6 @@ export const boardSlice = createSlice({
     },
     removeFromColumns: (state, action) => {
       const index = state.columns.findIndex((col) => {
-        // console.log('removeFromColumns', col._id, action.payload)
         return col._id === action.payload;
       });
       state.columns.splice(index, 1);
@@ -45,18 +44,29 @@ export const boardSlice = createSlice({
       state.columnsOrder.push(action.payload);
     },
     updateColumns: (state, action) => {
-      console.log(action);
       const index = state.columns.findIndex(
         (col) => col._id === action.payload._id
       );
       state.columns.splice(index, 1, action.payload);
     },
-    // updateColumnsOrder: (state, action) => {
-    //   const index = state.columnsOrder.findIndex(
-    //     (_id) => _id === action.payload
-    //   );
-    //   state.columnsOrder.splice(index, 1, action.payload);
+    addTasks: (state, action) => {
+      console.log("addTasks", action);
+      // state.columns.tasksOrder.push(action.payload);
+      const index = state.columns.findIndex(col => col._id === action.payload.colId)
+      state.columns[index].tasksOrder.unshift(action.payload.task._id)
+      state.columns[index].tasks.unshift(action.payload.task)
+    },
+    // addTasksOrder: (state, action) => {
+    //   state.columns.push(action.payload);
     // },
+    updateTask: (state, action) => {},
+    removeTask: (state, action) => {
+      state.columns.forEach((col) => {
+        const indx = col.tasksOrder.findIndex((id) => id === action.payload);
+        col.tasksOrder.splice(indx, 1);
+        col.tasks.splice(indx, 1);
+      });
+    },
   },
 });
 
@@ -67,7 +77,10 @@ export const {
   removeFromColumns,
   removeFromColumnsOrder,
   updateColumns,
-  // updateColumnsOrder,
+  // addTasksOrder,
+  addTasks,
+  updateTask,
+  removeTask,
 } = boardSlice.actions;
 
 export const board = (state: RootState) => state.board;
