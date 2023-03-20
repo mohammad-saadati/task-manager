@@ -152,9 +152,9 @@ const TaskManagment = () => {
             const column = boardData.columns.find(
               (col) => col._id === columnId
             ) as ColumnType;
-            const tasks = column?.tasksOrder.map((order) => {
+            const tasks = column?.tasksOrder?.map((order) => {
               return column.tasks.find((task) => {
-                return task.id === order;
+                return task._id === order;
               });
             });
 
