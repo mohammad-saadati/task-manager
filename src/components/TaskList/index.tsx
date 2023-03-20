@@ -1,11 +1,20 @@
 import { FC, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
-import { useAppDispatch } from "../../store/hooks";
 // modal actions from store
 import { openModal } from "../../store/features/modal";
+// icons
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { Menu, MenuItem } from "@mui/material";
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
+//
+import api from "../../utils/axios";
+// store
+import { useAppDispatch } from "../../store/hooks";
+import { updateTask, removeTask } from "../../store/features/board";
 
 interface TaskListProps {
-  tasks: { id: string; content: string }[];
+  tasks: { _id: string; title: string }[];
   children?:
     | React.ReactElement<HTMLElement, string | React.JSXElementConstructor<any>>
     | null
@@ -13,8 +22,15 @@ interface TaskListProps {
 }
 
 const TaskList: FC<TaskListProps> = ({ tasks }) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
   const showModal = useAppDispatch();
   const [currentTask, setCurrentTask] = useState({});
+
+  const open = Boolean(anchorEl);
+
+  const dispatcher = useAppDispatch();
 
   const handleModal = (task: any) => {
     showModal(openModal("me"));
