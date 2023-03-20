@@ -180,6 +180,9 @@ const TaskManagment = () => {
               variant="standard"
               value={colName}
               onChange={(e) => setColName(e.target.value)}
+              onKeyDown={(e: KeyboardEvent) => {
+                e.stopPropagation();
+              }}
             />
             <Button
               onClick={createColumn}
