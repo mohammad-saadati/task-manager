@@ -20,9 +20,48 @@ const TaskList: FC<TaskListProps> = ({ tasks }) => {
     showModal(openModal("me"));
     setCurrentTask({ ...task });
   };
+  const handleContextMenu = (
+    e: React.MouseEvent<HTMLElement>,
+    title: string
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setAnchorEl(e.currentTarget);
+    setName(title);
+  };
+  const handleDelete = async (id) => {
+    if (loading) return;
+    setLoading(true);
+    try {
+      const url = `/tasks/${id}`;
+      const res = await api.delete(url);
+      const { data, error } = res;
 
-  console.log('tasks...', tasks)
+      if (!error) dispatcher(removeTask(id));
+      // dispatcher(updateColumnsOrder(data.column._id));
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleRename = async (id) => {
+    if (loading) return;
+    setLoading(true);
+    try {
+      const url = `/tasks/${id}`;
+      const res = await api.put(url, { title: name });
+      const { data } = res;
 
+      // dispatcher(updateColumns(data.column));
+      // dispatcher(updateColumnsOrder(data.column._id));
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  console.log('tasks', tasks)
   return (
     <>
       {tasks.map((task, index) => (
@@ -37,7 +76,32 @@ const TaskList: FC<TaskListProps> = ({ tasks }) => {
               {...provided.dragHandleProps}
               ref={provided.innerRef}
             >
-              {task.title}
+              <div className="flex justify-between">
+                {task.title}
+                <MoreHorizIcon
+                  onClick={(e) => handleContextMenu(e, task.title)}
+                  className="text-[#D3D1CB]"
+                />
+              </div>
+              <Menu
+                elevation={1}
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={() => setAnchorEl(null)}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem onClick={() => handleDelete(task._id)}>
+                  <DeleteOutlineIcon sx={{ marginRight: 1 }} />
+                  Delete
+                </MenuItem>
+                <MenuItem onClick={() => handleRename(task._id)}>
+                  <DriveFileRenameOutlineIcon sx={{ marginRight: 1 }} />
+                  Rename
+                </MenuItem>
+              </Menu>
             </div>
           )}
         </Draggable>
