@@ -5,7 +5,7 @@ import { openModal } from "../../store/features/modal";
 // icons
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { Menu, MenuItem } from "@mui/material";
+import { Menu, MenuItem, TextField } from "@mui/material";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 //
 import api from "../../utils/axios";
@@ -27,7 +27,9 @@ const TaskList: FC<TaskListProps> = ({ tasks }) => {
   const [loading, setLoading] = useState(false);
   const showModal = useAppDispatch();
   const [currentTask, setCurrentTask] = useState({});
-
+  const [editingIndex, setEditingIndex] = useState<null | Number>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingId, setEditingId] = useState(false);
   const open = Boolean(anchorEl);
 
   const dispatcher = useAppDispatch();
@@ -36,24 +38,26 @@ const TaskList: FC<TaskListProps> = ({ tasks }) => {
     showModal(openModal("me"));
     setCurrentTask({ ...task });
   };
-  const handleContextMenu = (
-    e: React.MouseEvent<HTMLElement>,
-    title: string
-  ) => {
+  const handleContextMenu = (e: React.MouseEvent<HTMLElement>, task, index) => {
     e.preventDefault();
     e.stopPropagation();
     setAnchorEl(e.currentTarget);
-    setName(title);
+    setName(task.title);
+    setEditingIndex(index);
+    setEditingId(task._id);
+    console.log(index);
   };
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
+    setAnchorEl(null);
+
     if (loading) return;
     setLoading(true);
     try {
-      const url = `/tasks/${id}`;
+      const url = `/tasks/${editingId}`;
       const res = await api.delete(url);
-      const { data, error } = res;
+      const { data } = res;
 
-      if (!error) dispatcher(removeTask(id));
+      if (!data.error) dispatcher(removeTask(editingId));
       // dispatcher(updateColumnsOrder(data.column._id));
     } catch (err) {
       console.log(err);
@@ -61,23 +65,24 @@ const TaskList: FC<TaskListProps> = ({ tasks }) => {
       setLoading(false);
     }
   };
-  const handleRename = async (id) => {
+  const handleRename = async (id, index) => {
     if (loading) return;
     setLoading(true);
     try {
       const url = `/tasks/${id}`;
       const res = await api.put(url, { title: name });
       const { data } = res;
-
-      // dispatcher(updateColumns(data.column));
-      // dispatcher(updateColumnsOrder(data.column._id));
+      if (!data.error) {
+        dispatcher(updateTask(data.task));
+        setIsEditing(false);
+      }
     } catch (err) {
       console.log(err);
     } finally {
       setLoading(false);
     }
   };
-  console.log('tasks', tasks)
+  console.log("tasks", tasks);
   return (
     <>
       {tasks.map((task, index) => (
@@ -127,7 +132,12 @@ const TaskList: FC<TaskListProps> = ({ tasks }) => {
                   <DeleteOutlineIcon sx={{ marginRight: 1 }} />
                   Delete
                 </MenuItem>
-                <MenuItem onClick={() => handleRename(task._id)}>
+                <MenuItem
+                  onClick={() => {
+                    setAnchorEl(null);
+                    setIsEditing(true);
+                  }}
+                >
                   <DriveFileRenameOutlineIcon sx={{ marginRight: 1 }} />
                   Rename
                 </MenuItem>
