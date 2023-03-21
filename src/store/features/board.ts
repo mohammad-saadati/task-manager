@@ -52,9 +52,12 @@ export const boardSlice = createSlice({
     addTasks: (state, action) => {
       console.log("addTasks", action);
       // state.columns.tasksOrder.push(action.payload);
-      const index = state.columns.findIndex(col => col._id === action.payload.colId)
-      state.columns[index].tasksOrder.unshift(action.payload.task._id)
-      state.columns[index].tasks.unshift(action.payload.task)
+      const index = state.columns.findIndex(
+        (col) => col._id === action.payload.colId
+      );
+      state.columns[index].tasksOrder.unshift(action.payload.task._id);
+      state.columns[index].tasks.unshift(action.payload.task);
+    },
     updateTask: (state, action) => {
       state.columns.forEach((column) => {
         const index = column.tasks.findIndex(
