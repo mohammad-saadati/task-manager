@@ -93,15 +93,29 @@ const TaskList: FC<TaskListProps> = ({ tasks }) => {
               ref={provided.innerRef}
             >
               <div className="flex justify-between">
-                {task.title}
+                {isEditing && editingIndex === index ? (
+                  <TextField
+                    label=""
+                    variant="standard"
+                    value={name}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                    }}
+                    onKeyPress={(e) =>
+                      e.key === "Enter" && handleRename(task._id, index)
+                    }
+                  />
+                ) : (
+                  task.title
+                )}
+
                 <MoreHorizIcon
-                  onClick={(e) => handleContextMenu(e, task.title)}
+                  onClick={(e) => handleContextMenu(e, task, index)}
                   className="text-[#D3D1CB]"
                 />
               </div>
               <Menu
                 elevation={1}
-                id="basic-menu"
                 anchorEl={anchorEl}
                 open={open}
                 onClose={() => setAnchorEl(null)}
@@ -109,7 +123,7 @@ const TaskList: FC<TaskListProps> = ({ tasks }) => {
                   "aria-labelledby": "basic-button",
                 }}
               >
-                <MenuItem onClick={() => handleDelete(task._id)}>
+                <MenuItem onClick={handleDelete}>
                   <DeleteOutlineIcon sx={{ marginRight: 1 }} />
                   Delete
                 </MenuItem>
