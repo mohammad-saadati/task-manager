@@ -55,6 +55,14 @@ export const boardSlice = createSlice({
       const index = state.columns.findIndex(col => col._id === action.payload.colId)
       state.columns[index].tasksOrder.unshift(action.payload.task._id)
       state.columns[index].tasks.unshift(action.payload.task)
+    updateTask: (state, action) => {
+      state.columns.forEach((column) => {
+        const index = column.tasks.findIndex(
+          (task) => task._id === action.payload._id
+        );
+        console.log(index, action);
+        if (index !== -1) column.tasks.splice(index, 1, action.payload);
+      });
     },
     removeTask: (state, action) => {
       console.log(action);
