@@ -21,7 +21,7 @@ const Board = () => {
       // setBoard(data.board);
       dispatcher(initialboard(data.board));
     } catch (error) {}
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     getData();
