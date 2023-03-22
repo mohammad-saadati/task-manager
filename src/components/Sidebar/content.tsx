@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
 import {
   Box,
@@ -34,7 +34,8 @@ const Content = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("");
   const [activeIndex, setActiveIndex] = useState<null | number>(null);
-
+  const [editingId, setEditingId] = useState<null | number>(null);
+  const navigate = useNavigate();
   // const { id } = useParams();
 
   const getData = useCallback(async () => {
@@ -61,12 +62,13 @@ const Content = () => {
       console.log(err);
     }
   };
-  const handleContextMenu = (e: React.MouseEvent<HTMLElement>, index) => {
+  const handleContextMenu = (e: React.MouseEvent<HTMLElement>, index, id) => {
     e.preventDefault();
     e.stopPropagation();
     setAnchorEl(e.currentTarget);
     setOpen(true);
     setActiveIndex(index);
+    setEditingId(id);
     setName(boards[index].title);
   };
   const handleClose = async (boardID) => {
@@ -74,15 +76,18 @@ const Content = () => {
     } catch (error) {}
     setOpen(false);
   };
-  const handleDelete = async (boardId) => {
+  const handleDelete = async () => {
     try {
-      const url = `/boards/${boardId}`;
+      const url = `/boards/${editingId}`;
       const res = await api.delete(url);
-      const { board } = res.data;
-      setBoards((current) => {
-        return current.filter((item) => item._id !== board._id);
-      });
-      setOpen(false);
+      const { board, error } = res.data;
+      if (!error) {
+        navigate("/");
+        setBoards((current) => {
+          return current.filter((item) => item._id !== board._id);
+        });
+        setOpen(false);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -158,7 +163,7 @@ const Content = () => {
 
                 <Button
                   id="basic-button"
-                  onClick={(e) => handleContextMenu(e, index)}
+                  onClick={(e) => handleContextMenu(e, index, board._id)}
                 >
                   <MoreHorizIcon className="text-[#0f172a]" />
                 </Button>
@@ -172,7 +177,7 @@ const Content = () => {
                     "aria-labelledby": "basic-button",
                   }}
                 >
-                  <MenuItem onClick={() => handleDelete(board._id)}>
+                  <MenuItem onClick={handleDelete}>
                     <DeleteOutlineIcon sx={{ marginRight: 1 }} />
                     Delete
                   </MenuItem>
