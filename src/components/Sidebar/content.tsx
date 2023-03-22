@@ -57,7 +57,7 @@ const Content = () => {
       // if (res) setUser((prevState) => ({ ...prevState, ...res.data.user }));
       console.log("res", res);
 
-      setBoards([...boards, data.board]);
+      setBoards([data.board, ...boards]);
     } catch (err) {
       console.log(err);
     }
