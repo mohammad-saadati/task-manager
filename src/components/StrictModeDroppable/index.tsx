@@ -112,7 +112,7 @@ const StrictModeDroppable = ({
       });
       const { data } = res;
 
-      dispatcher(updateColumns(data.column));
+      dispatcher(addTasks({ colId: id, task: data.task }));
     } catch (err) {
       console.log(err);
     } finally {
