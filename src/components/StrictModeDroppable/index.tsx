@@ -172,7 +172,7 @@ const StrictModeDroppable = ({
                 </MenuItem>
               </Menu>
             </div>
-            <div className="column-add" onClick={addTask}>
+            <div className="column-add">
               <MoreHorizIcon
                 onClick={(e) => handleContextMenu(e)}
                 className="text-[#D3D1CB]"
