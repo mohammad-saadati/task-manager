@@ -101,7 +101,7 @@ const StrictModeDroppable = ({
       setLoading(false);
     }
   };
-  const createTask = async () => {
+  const createTask = async (id) => {
     if (loading) return;
     setLoading(true);
     try {
