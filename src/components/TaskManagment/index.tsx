@@ -145,55 +145,58 @@ const TaskManagment = () => {
   };
 
   return (
-    <div className="flex items-start">
-      <DragDropContext onDragEnd={onDragEnd}>
-        <StrictModeDroppableSingle>
-          {boardData.columnsOrder.map((columnId: string, index) => {
-            const column = boardData.columns.find(
-              (col) => col._id === columnId
-            ) as ColumnType;
-            const tasks = column?.tasksOrder?.map((order) => {
-              return column.tasks.find((task) => {
-                return task._id === order;
+    <div className="flex flex-col items-start font-semibold text-2xl">
+      <div>{boardData.title}</div>
+      <div className="flex">
+        <DragDropContext onDragEnd={onDragEnd}>
+          <StrictModeDroppableSingle>
+            {boardData.columnsOrder.map((columnId: string, index) => {
+              const column = boardData.columns.find(
+                (col) => col._id === columnId
+              ) as ColumnType;
+              const tasks = column?.tasksOrder?.map((order) => {
+                return column.tasks.find((task) => {
+                  return task._id === order;
+                });
               });
-            });
 
-            return column ? (
-              <Column
-                index={index}
-                key={column._id}
-                column={column}
-                tasks={tasks}
-              />
-            ) : null;
-          })}
-        </StrictModeDroppableSingle>
-        <div className="py-4">
-          <Button variant="outlined" onClick={openMenu}>
-            <AddIcon />
-          </Button>
-        </div>
-        <Menu open={open} anchorEl={anchorEl} onClose={handleClose}>
-          <MenuItem>
-            <TextField
-              label=""
-              variant="standard"
-              value={colName}
-              onChange={(e) => setColName(e.target.value)}
-              onKeyDown={(e: KeyboardEvent) => {
-                e.stopPropagation();
-              }}
-            />
-            <Button
-              onClick={createColumn}
-              sx={{ marginLeft: 2 }}
-              variant="contained"
-            >
-              create
+              return column ? (
+                <Column
+                  index={index}
+                  key={column._id}
+                  column={column}
+                  tasks={tasks}
+                />
+              ) : null;
+            })}
+          </StrictModeDroppableSingle>
+          <div className="py-4">
+            <Button variant="outlined" onClick={openMenu}>
+              <AddIcon />
             </Button>
-          </MenuItem>
-        </Menu>
-      </DragDropContext>
+          </div>
+          <Menu open={open} anchorEl={anchorEl} onClose={handleClose}>
+            <MenuItem>
+              <TextField
+                label=""
+                variant="standard"
+                value={colName}
+                onChange={(e) => setColName(e.target.value)}
+                onKeyDown={(e: KeyboardEvent) => {
+                  e.stopPropagation();
+                }}
+              />
+              <Button
+                onClick={createColumn}
+                sx={{ marginLeft: 2 }}
+                variant="contained"
+              >
+                create
+              </Button>
+            </MenuItem>
+          </Menu>
+        </DragDropContext>
+      </div>
     </div>
   );
 };
