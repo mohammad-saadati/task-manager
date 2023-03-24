@@ -18,7 +18,8 @@ import {
   removeFromColumns,
   removeFromColumnsOrder,
   updateColumns,
-  updateColumnsOrder,
+  // addTasksOrder,
+  addTasks,
 } from "../../store/features/board";
 
 interface columnData {
