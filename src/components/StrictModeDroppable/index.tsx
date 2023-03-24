@@ -58,14 +58,6 @@ const StrictModeDroppable = ({
   if (!enabled) {
     return null;
   }
-  const addTask = async () => {
-    try {
-      // const url = `/auth/login/success`;
-      // const res = await api.get(url);
-    } catch (err) {
-      console.log(err);
-    }
-  };
   const handleContextMenu = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     e.stopPropagation();
