@@ -177,7 +177,10 @@ const StrictModeDroppable = ({
                 onClick={(e) => handleContextMenu(e)}
                 className="text-[#D3D1CB]"
               />
-              <AddIcon className="text-[#D3D1CB]" onClick={createTask} />
+              <AddIcon
+                className="text-[#D3D1CB]"
+                onClick={() => createTask(column._id)}
+              />
               <Menu
                 elevation={1}
                 id="basic-menu"
