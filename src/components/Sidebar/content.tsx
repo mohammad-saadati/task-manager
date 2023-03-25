@@ -23,10 +23,13 @@ import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutli
 import api from "../../utils/axios";
 // css
 import "./index.css";
-import { useAppSelector } from "../../store/hooks";
+// store
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
+import { updateTitle } from "../../store/features/board";
 
 const Content = () => {
   const user = useAppSelector((state) => state.currentUser.currentUser);
+  const dispatcher = useAppDispatch();
   const [boards, setBoards] = useState([]);
   const [title, setTitle] = useState("Untitled");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -82,11 +85,11 @@ const Content = () => {
       const res = await api.delete(url);
       const { board, error } = res.data;
       if (!error) {
-        navigate("/");
         setBoards((current) => {
           return current.filter((item) => item._id !== board._id);
         });
         setOpen(false);
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
@@ -99,6 +102,9 @@ const Content = () => {
 
       if (!res.data.error) {
         const { board } = res.data;
+
+        dispatcher(updateTitle(name));
+
         setBoards((current) => {
           const temp = [...current];
           temp.splice(index, 1, board);
