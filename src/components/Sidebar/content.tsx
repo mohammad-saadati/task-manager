@@ -173,30 +173,6 @@ const Content = () => {
                 >
                   <MoreHorizIcon className="text-[#0f172a]" />
                 </Button>
-                <Menu
-                  elevation={1}
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    "aria-labelledby": "basic-button",
-                  }}
-                >
-                  <MenuItem onClick={handleDelete}>
-                    <DeleteOutlineIcon sx={{ marginRight: 1 }} />
-                    Delete
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      setIsEditing(true);
-                      setOpen(false);
-                    }}
-                  >
-                    <DriveFileRenameOutlineIcon sx={{ marginRight: 1 }} />
-                    Rename
-                  </MenuItem>
-                </Menu>
               </ListItemButton>
             </Link>
           ))
@@ -204,6 +180,30 @@ const Content = () => {
           <Box className="px-4 text-xs">there is no board</Box>
         )}
       </List>
+      <Menu
+        elevation={1}
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        <MenuItem onClick={handleDelete}>
+          <DeleteOutlineIcon sx={{ marginRight: 1 }} />
+          Delete
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            setIsEditing(true);
+            setOpen(false);
+          }}
+        >
+          <DriveFileRenameOutlineIcon sx={{ marginRight: 1 }} />
+          Rename
+        </MenuItem>
+      </Menu>
     </Box>
   );
 };
