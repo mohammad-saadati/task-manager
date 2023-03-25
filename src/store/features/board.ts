@@ -12,11 +12,13 @@ export interface Column {
   tasksOrder: string[];
 }
 interface BoardState {
+  title: string;
   columns: Column[];
   columnsOrder: string[];
 }
 
 const initialState: BoardState = {
+  string: "",
   columns: [],
   columnsOrder: [],
 };
