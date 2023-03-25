@@ -30,6 +30,9 @@ export const boardSlice = createSlice({
     initialboard: (state, action) => {
       return { ...state, ...action.payload };
     },
+    updateTitle: (state, action) => {
+      state.title = action.payload;
+    },
     addColumns: (state, action) => {
       state.columns.push(action.payload);
     },
@@ -84,6 +87,7 @@ export const boardSlice = createSlice({
 
 export const {
   initialboard,
+  updateTitle,
   addColumns,
   addColumnsOrder,
   removeFromColumns,
