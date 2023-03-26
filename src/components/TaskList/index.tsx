@@ -82,7 +82,7 @@ const TaskList: FC<TaskListProps> = ({ tasks }) => {
       setLoading(false);
     }
   };
-  console.log("tasks", tasks);
+
   return (
     <>
       {tasks.map((task, index) => (
@@ -97,7 +97,7 @@ const TaskList: FC<TaskListProps> = ({ tasks }) => {
               {...provided.dragHandleProps}
               ref={provided.innerRef}
             >
-              <div className="flex justify-between">
+              <div className="flex justify-between text-sm">
                 {isEditing && editingIndex === index ? (
                   <TextField
                     label=""
