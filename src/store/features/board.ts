@@ -18,7 +18,7 @@ interface BoardState {
 }
 
 const initialState: BoardState = {
-  string: "",
+  title: "",
   columns: [],
   columnsOrder: [],
 };
