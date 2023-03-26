@@ -30,6 +30,7 @@ import { updateTitle } from "../../store/features/board";
 const Content = () => {
   const user = useAppSelector((state) => state.currentUser.currentUser);
   const dispatcher = useAppDispatch();
+
   const [boards, setBoards] = useState([]);
   const [title, setTitle] = useState("Untitled");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -38,6 +39,7 @@ const Content = () => {
   const [name, setName] = useState("");
   const [activeIndex, setActiveIndex] = useState<null | number>(null);
   const [editingId, setEditingId] = useState<null | number>(null);
+
   const navigate = useNavigate();
   // const { id } = useParams();
 
