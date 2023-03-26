@@ -82,6 +82,18 @@ export const boardSlice = createSlice({
         }
       });
     },
+    moveColumn: (state, action) => {
+      state.columnsOrder.splice(action.payload.sourceIndex, 1);
+      state.columnsOrder.splice(
+        action.payload.destinationIndex,
+        0,
+        action.payload.draggableId
+      );
+
+      const src = state.columns.splice(action.payload.sourceIndex, 1)[0];
+      state.columns.splice(action.payload.destinationIndex, 0, src);
+    },
+    moveTask: (state, action) => {},
   },
 });
 
@@ -96,6 +108,8 @@ export const {
   addTasks,
   updateTask,
   removeTask,
+  moveColumn,
+  moveTask,
 } = boardSlice.actions;
 
 export const board = (state: RootState) => state.board;
