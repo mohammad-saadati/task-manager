@@ -93,7 +93,34 @@ export const boardSlice = createSlice({
       const src = state.columns.splice(action.payload.sourceIndex, 1)[0];
       state.columns.splice(action.payload.destinationIndex, 0, src);
     },
-    moveTask: (state, action) => {},
+    reorderTask: (state, action) => {
+      const index = state.columns.findIndex((col) => {
+        const index = col.tasksOrder.findIndex(
+          (task) => task === action.payload.draggableId
+        );
+        if (index !== -1) return true;
+      });
+
+      let src = state.columns[index].tasks.splice(
+        action.payload.sourceIndex,
+        1
+      )[0];
+      state.columns[index].tasks.splice(
+        action.payload.destinationIndex,
+        0,
+        src
+      );
+
+      src = state.columns[index].tasksOrder.splice(
+        action.payload.sourceIndex,
+        1
+      )[0];
+      state.columns[index].tasksOrder.splice(
+        action.payload.destinationIndex,
+        0,
+        src
+      );
+    },
   },
 });
 
