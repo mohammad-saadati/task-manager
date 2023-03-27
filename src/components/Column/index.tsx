@@ -4,12 +4,13 @@ import StrictModeDroppable from "../StrictModeDroppable";
 // types
 import { Column as ColumnType } from "../../mock/initialData";
 interface columnData {
-  tasks: { id: string; content: string }[];
-  column: ColumnType;
+  // tasks: { id: string; content: string }[];
+  // column: ColumnType;
   index: number;
+  colId: string;
 }
 
-const Column: FC<columnData> = ({ column, tasks, index }) => {
+const Column: FC<columnData> = ({ index, colId }) => {
   const [columnBgColor, setColumnBgColor] = useState("bg-white");
 
   const onColumnDraggingOver = (isDraggingOver = false) => {
@@ -21,8 +22,7 @@ const Column: FC<columnData> = ({ column, tasks, index }) => {
   return (
     <StrictModeDroppable
       index={index}
-      column={column}
-      tasks={tasks}
+      id={colId}
       backgroundCallback={onColumnDraggingOver}
     />
   );
