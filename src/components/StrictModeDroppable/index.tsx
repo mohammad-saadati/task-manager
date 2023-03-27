@@ -42,6 +42,8 @@ const StrictModeDroppable = ({ backgroundCallback, index, id }: columnData) => {
   const [colName, setColName] = useState("");
   const [loading, setLoading] = useState(false);
   const openRenameMenu = Boolean(renameAnchorEl);
+  // store
+  const column = useAppSelector((state) => state.board.columns.find(col => col._id === id));
   const dispatcher = useAppDispatch();
 
   useEffect(() => {
@@ -55,6 +57,7 @@ const StrictModeDroppable = ({ backgroundCallback, index, id }: columnData) => {
   if (!enabled) {
     return null;
   }
+
   const handleContextMenu = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -91,7 +94,6 @@ const StrictModeDroppable = ({ backgroundCallback, index, id }: columnData) => {
       const { data } = res;
 
       dispatcher(updateColumns(data.column));
-      // dispatcher(updateColumnsOrder(data.column._id));
     } catch (err) {
       console.log(err);
     } finally {
@@ -205,7 +207,7 @@ const StrictModeDroppable = ({ backgroundCallback, index, id }: columnData) => {
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
-                  <TaskList tasks={tasks} />
+                  <TaskList tasks={column.tasks} />
                   {provided.placeholder}
                 </div>
               );
