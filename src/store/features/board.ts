@@ -73,7 +73,6 @@ export const boardSlice = createSlice({
       });
     },
     removeTask: (state, action) => {
-      console.log(action);
       state.columns.forEach((col) => {
         const indx = col.tasksOrder.findIndex((id) => id === action.payload);
         if (indx !== -1) {
@@ -121,6 +120,37 @@ export const boardSlice = createSlice({
         src
       );
     },
+    moveTask: (state, action) => {
+      const srcColumnIdx = state.columns.findIndex(
+        (col) => col._id === action.payload.source.droppableId
+      );
+
+      const desColumnIdx = state.columns.findIndex(
+        (col) => col._id === action.payload.destination.droppableId
+      );
+
+      let temp = state.columns[srcColumnIdx].tasks[action.payload.source.index];
+      state.columns[srcColumnIdx].tasks.splice(action.payload.source.index, 1);
+
+      state.columns[desColumnIdx].tasks.splice(
+        action.payload.destination.index,
+        0,
+        temp
+      );
+
+      temp =
+        state.columns[srcColumnIdx].tasksOrder[action.payload.source.index];
+      state.columns[srcColumnIdx].tasksOrder.splice(
+        action.payload.source.index,
+        1
+      )[0];
+
+      state.columns[desColumnIdx].tasksOrder.splice(
+        action.payload.destination.index,
+        0,
+        temp
+      );
+    },
   },
 });
 
@@ -136,6 +166,7 @@ export const {
   updateTask,
   removeTask,
   moveColumn,
+  reorderTask,
   moveTask,
 } = boardSlice.actions;
 
