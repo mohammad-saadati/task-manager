@@ -23,18 +23,14 @@ import {
 } from "../../store/features/board";
 
 interface columnData {
-  tasks: { id: string; content: string }[];
-  column: Column;
+  // tasks: { id: string; content: string }[];
+  // column: Column;
   backgroundCallback: (isDraggingOver: boolean) => void;
   index: number;
+  id: string;
 }
 
-const StrictModeDroppable = ({
-  column,
-  tasks,
-  backgroundCallback,
-  index,
-}: columnData) => {
+const StrictModeDroppable = ({ backgroundCallback, index, id }: columnData) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [renameAnchorEl, setRenameAnchorEl] = useState<null | HTMLElement>(
     null
