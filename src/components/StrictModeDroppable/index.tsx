@@ -43,7 +43,9 @@ const StrictModeDroppable = ({ backgroundCallback, index, id }: columnData) => {
   const [loading, setLoading] = useState(false);
   const openRenameMenu = Boolean(renameAnchorEl);
   // store
-  const column = useAppSelector((state) => state.board.columns.find(col => col._id === id));
+  const column = useAppSelector((state) =>
+    state.board.columns.find((col) => col._id === id)
+  );
   const dispatcher = useAppDispatch();
 
   useEffect(() => {
