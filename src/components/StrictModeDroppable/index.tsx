@@ -209,7 +209,7 @@ const StrictModeDroppable = ({ backgroundCallback, index, id }: columnData) => {
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
-                  <TaskList tasks={column.tasks} />
+                  <TaskList colId={column._id} />
                   {provided.placeholder}
                 </div>
               );
