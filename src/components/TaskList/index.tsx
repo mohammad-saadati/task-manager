@@ -10,7 +10,7 @@ import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutli
 //
 import api from "../../utils/axios";
 // store
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { updateTask, removeTask } from "../../store/features/board";
 
 interface TaskListProps {
@@ -21,7 +21,7 @@ interface TaskListProps {
     | undefined;
 }
 
-const TaskList: FC<TaskListProps> = ({ tasks }) => {
+const TaskList: FC<TaskListProps> = ({ colId }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
@@ -31,8 +31,12 @@ const TaskList: FC<TaskListProps> = ({ tasks }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingId, setEditingId] = useState(false);
   const open = Boolean(anchorEl);
-
+  // store
   const dispatcher = useAppDispatch();
+  const tasks = useAppSelector((state) => {
+    const col = state.board.columns.find((col) => col._id === colId);
+    return col.tasks;
+  });
 
   const handleModal = (task: any) => {
     showModal(openModal("me"));
@@ -82,7 +86,7 @@ const TaskList: FC<TaskListProps> = ({ tasks }) => {
       setLoading(false);
     }
   };
-
+  console.log("tasks", tasks);
   return (
     <>
       {tasks.map((task, index) => (
@@ -138,14 +142,56 @@ const TaskList: FC<TaskListProps> = ({ tasks }) => {
                     setIsEditing(true);
                   }}
                 >
-                  <DriveFileRenameOutlineIcon sx={{ marginRight: 1 }} />
-                  Rename
-                </MenuItem>
-              </Menu>
-            </div>
-          )}
-        </Draggable>
-      ))}
+                  <div className="flex justify-between text-sm">
+                    {isEditing && editingIndex === index ? (
+                      <TextField
+                        label=""
+                        variant="standard"
+                        value={name}
+                        onChange={(e) => {
+                          setName(e.target.value);
+                        }}
+                        onKeyPress={(e) =>
+                          e.key === "Enter" && handleRename(task._id, index)
+                        }
+                      />
+                    ) : (
+                      task.title
+                    )}
+
+                    <MoreHorizIcon
+                      onClick={(e) => handleContextMenu(e, task, index)}
+                      className="text-[#D3D1CB]"
+                    />
+                  </div>
+                  <Menu
+                    elevation={1}
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={() => setAnchorEl(null)}
+                    MenuListProps={{
+                      "aria-labelledby": "basic-button",
+                    }}
+                  >
+                    <MenuItem onClick={handleDelete}>
+                      <DeleteOutlineIcon sx={{ marginRight: 1 }} />
+                      Delete
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        setAnchorEl(null);
+                        setIsEditing(true);
+                      }}
+                    >
+                      <DriveFileRenameOutlineIcon sx={{ marginRight: 1 }} />
+                      Rename
+                    </MenuItem>
+                  </Menu>
+                </div>
+              )}
+            </Draggable>
+          ))
+        : null}
     </>
   );
 };
