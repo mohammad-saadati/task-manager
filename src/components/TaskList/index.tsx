@@ -89,58 +89,18 @@ const TaskList: FC<TaskListProps> = ({ colId }) => {
   console.log("tasks", tasks);
   return (
     <>
-      {tasks.map((task, index) => (
-        <Draggable draggableId={task._id} index={index} key={task._id}>
-          {(provided, snapshot) => (
-            <div
-              onClick={(e) => handleModal(task)}
-              className={`shadow-task p-2 mb-2 hover:bg-cultured bg-white cursor-pointer ${
-                snapshot.isDragging ? "bg-cultured" : ""
-              }`}
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
-              ref={provided.innerRef}
-            >
-              <div className="flex justify-between text-sm">
-                {isEditing && editingIndex === index ? (
-                  <TextField
-                    label=""
-                    variant="standard"
-                    value={name}
-                    onChange={(e) => {
-                      setName(e.target.value);
-                    }}
-                    onKeyPress={(e) =>
-                      e.key === "Enter" && handleRename(task._id, index)
-                    }
-                  />
-                ) : (
-                  task.title
-                )}
-
-                <MoreHorizIcon
-                  onClick={(e) => handleContextMenu(e, task, index)}
-                  className="text-[#D3D1CB]"
-                />
-              </div>
-              <Menu
-                elevation={1}
-                anchorEl={anchorEl}
-                open={open}
-                onClose={() => setAnchorEl(null)}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
-                }}
-              >
-                <MenuItem onClick={handleDelete}>
-                  <DeleteOutlineIcon sx={{ marginRight: 1 }} />
-                  Delete
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    setAnchorEl(null);
-                    setIsEditing(true);
-                  }}
+      {tasks
+        ? tasks.map((task, index) => (
+            <Draggable draggableId={task._id} index={index} key={task._id}>
+              {(provided, snapshot) => (
+                <div
+                  onClick={(e) => handleModal(task)}
+                  className={`shadow-task p-2 mb-2 hover:bg-cultured bg-white cursor-pointer ${
+                    snapshot.isDragging ? "bg-cultured" : ""
+                  }`}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                  ref={provided.innerRef}
                 >
                   <div className="flex justify-between text-sm">
                     {isEditing && editingIndex === index ? (
