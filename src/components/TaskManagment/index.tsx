@@ -10,7 +10,13 @@ import StrictModeDroppableSingle from "../StrictModeDroppableSingle";
 import { useGetCurrentUserQuery } from "../../store/thunks/index";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setCurrentUser } from "../../store/features/currentUser";
-import { addColumns, addColumnsOrder } from "../../store/features/board";
+import {
+  addColumns,
+  addColumnsOrder,
+  moveColumn,
+  reorderTask,
+  moveTask,
+} from "../../store/features/board";
 //
 import { Button, Menu, MenuItem, TextField } from "@mui/material";
 // icons
@@ -29,6 +35,7 @@ const TaskManagment = () => {
   // const { data, error, isLoading } = useGetCurrentUserQuery("");
   const dispatcher = useAppDispatch();
   const boardData = useAppSelector((state) => state.board);
+
   // if (!isLoading) er(setCurrentUser(data));
 
   const [enabled, setEnabled] = useState(false);
@@ -48,73 +55,70 @@ const TaskManagment = () => {
       return;
     }
 
-    setBoardData((current) => {
-      if (type === "column") {
-        let columns = Array.from(current.columnsOrder);
-
-        columns.splice(source.index, 1);
-        columns.splice(destination.index, 0, draggableId);
-
-        return {
-          ...current,
-          columnsOrder: columns,
-        };
-      }
-      // reorder in the same column
-      if (destination.droppableId === source.droppableId) {
-        const srcColId = source.droppableId;
-        // remove card from source
-        let tempTaskOrder = Array.from(
-          current.columns.find((col) => col.id === srcColId).tasksOrder
-        );
-        tempTaskOrder.splice(source.index, 1);
-        tempTaskOrder.splice(destination.index, 0, draggableId);
-
-        const newCol = {
-          ...current.columns.find((col) => col.id === srcColId),
-          tasksOrder: tempTaskOrder,
-        } as ColumnType;
-
-        const tempColumns = Array.from(current.columns);
-        const matchedCol = tempColumns.findIndex((col) => col.id === newCol.id);
-        tempColumns.splice(matchedCol, 1, newCol);
-        // console.log("tempColumns", tempColumns);
-
-        return {
-          ...current,
-          columns: [...tempColumns],
-        };
-      } else {
-        const columnsCopy = Array.from(current.columns);
-        const sourceCol = columnsCopy.findIndex(
-          (col) => col.id === source.droppableId
-        );
-        const movedTask = columnsCopy[sourceCol].tasks[source.index];
-
-        columnsCopy[sourceCol].tasks.splice(source.index, 1);
-        columnsCopy[sourceCol].tasksOrder.splice(source.index, 1);
-
-        const destinationCol = columnsCopy.findIndex(
-          (col) => col.id === destination.droppableId
-        );
-
-        columnsCopy[destinationCol].tasks.splice(
-          destination.index,
-          0,
-          movedTask
-        );
-        columnsCopy[destinationCol].tasksOrder.splice(
-          destination.index,
-          0,
-          draggableId
-        );
-
-        return {
-          ...current,
-          columns: [...columnsCopy],
-        };
-      }
-    });
+    if (type === "column") {
+      const temp = async () => {
+        try {
+          const url = `/columns/reorder`;
+          const res = await api.put(url, {
+            columnId: draggableId,
+            boardId: destination.droppableId,
+            targetIndex: destination.index,
+            sourceIndex: source.index,
+          });
+          const { error } = res.data;
+          return error;
+        } catch (err) {
+          console.log(err);
+          return;
+        } finally {
+        }
+      };
+      temp();
+      dispatcher(
+        moveColumn({
+          destinationIndex: destination.index,
+          sourceIndex: source.index,
+          draggableId,
+        })
+      );
+      return;
+    }
+    // reorder in the same column
+    if (destination.droppableId === source.droppableId) {
+      const temp = async () => {
+        try {
+          const url = `/tasks/reorder`;
+          const res = await api.put(url, {
+            taskId: draggableId,
+            columnId: destination.droppableId,
+            targetIndex: destination.index,
+            sourceIndex: source.index
+          });
+          const { error } = res.data;
+        } catch (err) {
+          console.log(err);
+          return;
+        } finally {
+        }
+      };
+      temp();
+      dispatcher(
+        reorderTask({
+          destinationIndex: destination.index,
+          sourceIndex: source.index,
+          colId: destination.droppableId,
+          draggableId,
+        })
+      );
+    } else {
+      dispatcher(
+        moveTask({
+          destination,
+          source,
+          draggableId,
+        })
+      );
+    }
   };
   const openMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -125,16 +129,20 @@ const TaskManagment = () => {
   const createColumn = async () => {
     if (loadingColumn) return;
     setLoadingColumn(true);
+
     try {
       const url = `/columns`;
       const res = await api.post(url, {
         title: colName,
         boardId: id,
       });
-      const { data } = res;
+      const { column, error } = res.data;
 
-      dispatcher(addColumns(data.column));
-      dispatcher(addColumnsOrder(data.column._id));
+      if (!error) {
+        handleClose();
+        dispatcher(addColumns(column));
+        dispatcher(addColumnsOrder(column._id));
+      }
 
       // if (res) setUser((prevState) => ({ ...prevState, ...res.data.user }));
     } catch (err) {
@@ -149,7 +157,7 @@ const TaskManagment = () => {
       <div>{boardData.title}</div>
       <div className="flex">
         <DragDropContext onDragEnd={onDragEnd}>
-          <StrictModeDroppableSingle>
+          <StrictModeDroppableSingle id={boardData._id}>
             {boardData.columnsOrder.map((columnId: string, index) => {
               const column = boardData.columns.find(
                 (col) => col._id === columnId
@@ -161,12 +169,7 @@ const TaskManagment = () => {
               });
 
               return column ? (
-                <Column
-                  index={index}
-                  key={column._id}
-                  column={column}
-                  tasks={tasks}
-                />
+                <Column index={index} colId={column._id} key={column._id} />
               ) : null;
             })}
           </StrictModeDroppableSingle>
