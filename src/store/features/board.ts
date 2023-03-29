@@ -93,13 +93,10 @@ export const boardSlice = createSlice({
       state.columns.splice(action.payload.destinationIndex, 0, src);
     },
     reorderTask: (state, action) => {
-      const index = state.columns.findIndex((col) => {
-        const index = col.tasksOrder.findIndex(
-          (task) => task === action.payload.draggableId
-        );
-        if (index !== -1) return true;
-      });
-
+      const index = state.columns.findIndex(
+        (col) => col._id === action.payload.colId
+      );
+      console.log(index, action.payload);
       let src = state.columns[index].tasks.splice(
         action.payload.sourceIndex,
         1
