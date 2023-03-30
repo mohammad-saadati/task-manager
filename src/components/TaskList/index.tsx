@@ -33,9 +33,9 @@ const TaskList: FC<TaskListProps> = ({ colId }) => {
   const open = Boolean(anchorEl);
   // store
   const dispatcher = useAppDispatch();
-  const tasks = useAppSelector((state) => {
+  const col = useAppSelector((state) => {
     const col = state.board.columns.find((col) => col._id === colId);
-    return col.tasks;
+    return col;
   });
 
   const handleModal = (task: any) => {
@@ -49,7 +49,6 @@ const TaskList: FC<TaskListProps> = ({ colId }) => {
     setName(task.title);
     setEditingIndex(index);
     setEditingId(task._id);
-    console.log(index);
   };
   const handleDelete = async () => {
     setAnchorEl(null);
@@ -86,72 +85,74 @@ const TaskList: FC<TaskListProps> = ({ colId }) => {
       setLoading(false);
     }
   };
-  console.log("tasks", tasks);
+
   return (
     <>
-      {tasks
-        ? tasks.map((task, index) => (
-            <Draggable draggableId={task._id} index={index} key={task._id}>
-              {(provided, snapshot) => (
-                <div
-                  onClick={(e) => handleModal(task)}
-                  className={`shadow-task p-2 mb-2 hover:bg-cultured bg-white cursor-pointer ${
-                    snapshot.isDragging ? "bg-cultured" : ""
-                  }`}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                  ref={provided.innerRef}
-                >
-                  <div className="flex justify-between text-sm">
-                    {isEditing && editingIndex === index ? (
-                      <TextField
-                        label=""
-                        variant="standard"
-                        value={name}
-                        onChange={(e) => {
-                          setName(e.target.value);
-                        }}
-                        onKeyPress={(e) =>
-                          e.key === "Enter" && handleRename(task._id, index)
-                        }
-                      />
-                    ) : (
-                      task.title
-                    )}
+      {col.tasksOrder.map((taskId, index) => {
+        const task = col.tasks.find((task) => task._id === taskId);
 
-                    <MoreHorizIcon
-                      onClick={(e) => handleContextMenu(e, task, index)}
-                      className="text-[#D3D1CB]"
+        return task ? (
+          <Draggable draggableId={task._id} index={index} key={task._id}>
+            {(provided, snapshot) => (
+              <div
+                onClick={(e) => handleModal(task)}
+                className={`shadow-task p-2 mb-2 hover:bg-cultured bg-white cursor-pointer ${
+                  snapshot.isDragging ? "bg-cultured" : ""
+                }`}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+                ref={provided.innerRef}
+              >
+                <div className="flex justify-between text-sm">
+                  {isEditing && editingIndex === index ? (
+                    <TextField
+                      label=""
+                      variant="standard"
+                      value={name}
+                      onChange={(e) => {
+                        setName(e.target.value);
+                      }}
+                      onKeyPress={(e) =>
+                        e.key === "Enter" && handleRename(task._id, index)
+                      }
                     />
-                  </div>
-                  <Menu
-                    elevation={1}
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={() => setAnchorEl(null)}
-                    MenuListProps={{
-                      "aria-labelledby": "basic-button",
+                  ) : (
+                    task.title
+                  )}
+
+                  <MoreHorizIcon
+                    onClick={(e) => handleContextMenu(e, task, index)}
+                    className="text-[#D3D1CB]"
+                  />
+                </div>
+                <Menu
+                  elevation={1}
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={() => setAnchorEl(null)}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  <MenuItem onClick={handleDelete}>
+                    <DeleteOutlineIcon sx={{ marginRight: 1 }} />
+                    Delete
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      setAnchorEl(null);
+                      setIsEditing(true);
                     }}
                   >
-                    <MenuItem onClick={handleDelete}>
-                      <DeleteOutlineIcon sx={{ marginRight: 1 }} />
-                      Delete
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        setAnchorEl(null);
-                        setIsEditing(true);
-                      }}
-                    >
-                      <DriveFileRenameOutlineIcon sx={{ marginRight: 1 }} />
-                      Rename
-                    </MenuItem>
-                  </Menu>
-                </div>
-              )}
-            </Draggable>
-          ))
-        : null}
+                    <DriveFileRenameOutlineIcon sx={{ marginRight: 1 }} />
+                    Rename
+                  </MenuItem>
+                </Menu>
+              </div>
+            )}
+          </Draggable>
+        ) : null;
+      })}
     </>
   );
 };
