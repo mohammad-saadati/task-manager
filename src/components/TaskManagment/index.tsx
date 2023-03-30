@@ -16,6 +16,7 @@ import {
   moveColumn,
   reorderTask,
   moveTask,
+  updateTitle,
 } from "../../store/features/board";
 //
 import { Button, Menu, MenuItem, TextField } from "@mui/material";
@@ -85,6 +86,18 @@ const TaskManagment = () => {
     }
     // reorder in the same column
     if (destination.droppableId === source.droppableId) {
+      dispatcher(
+        reorderTask({
+          destinationIndex: destination.index,
+          sourceIndex: source.index,
+          colId: destination.droppableId,
+          draggableId,
+        })
+      );
+      const col = boardData.columns.find(
+        (col) => col._id === destination.droppableId
+      );
+      console.log("col", col);
       const temp = async () => {
         try {
           const url = `/tasks/reorder`;
@@ -92,7 +105,8 @@ const TaskManagment = () => {
             taskId: draggableId,
             columnId: destination.droppableId,
             targetIndex: destination.index,
-            sourceIndex: source.index
+            sourceIndex: source.index,
+            order: col.tasksOrder,
           });
           const { error } = res.data;
         } catch (err) {
@@ -102,14 +116,6 @@ const TaskManagment = () => {
         }
       };
       temp();
-      dispatcher(
-        reorderTask({
-          destinationIndex: destination.index,
-          sourceIndex: source.index,
-          colId: destination.droppableId,
-          draggableId,
-        })
-      );
     } else {
       dispatcher(
         moveTask({
