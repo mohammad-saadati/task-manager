@@ -93,10 +93,11 @@ export const boardSlice = createSlice({
       state.columns.splice(action.payload.destinationIndex, 0, src);
     },
     reorderTask: (state, action) => {
+      console.log("reorderTask", action.payload);
+
       const index = state.columns.findIndex(
         (col) => col._id === action.payload.colId
       );
-      console.log(index, action.payload);
       let src = state.columns[index].tasks.splice(
         action.payload.sourceIndex,
         1
@@ -111,6 +112,8 @@ export const boardSlice = createSlice({
         action.payload.sourceIndex,
         1
       )[0];
+      console.log("src", src);
+
       state.columns[index].tasksOrder.splice(
         action.payload.destinationIndex,
         0,

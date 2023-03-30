@@ -36,7 +36,6 @@ const TaskManagment = () => {
   // const { data, error, isLoading } = useGetCurrentUserQuery("");
   const dispatcher = useAppDispatch();
   const boardData = useAppSelector((state) => state.board);
-
   // if (!isLoading) er(setCurrentUser(data));
 
   const [enabled, setEnabled] = useState(false);
@@ -94,10 +93,7 @@ const TaskManagment = () => {
           draggableId,
         })
       );
-      const col = boardData.columns.find(
-        (col) => col._id === destination.droppableId
-      );
-      console.log("col", col);
+
       const temp = async () => {
         try {
           const url = `/tasks/reorder`;
@@ -106,7 +102,6 @@ const TaskManagment = () => {
             columnId: destination.droppableId,
             targetIndex: destination.index,
             sourceIndex: source.index,
-            order: col.tasksOrder,
           });
           const { error } = res.data;
         } catch (err) {
