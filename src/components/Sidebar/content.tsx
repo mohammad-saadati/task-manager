@@ -59,8 +59,6 @@ const Content = () => {
       const url = `/boards`;
       const res = await api.post(url, { title });
       const { data } = res;
-      // if (res) setUser((prevState) => ({ ...prevState, ...res.data.user }));
-      console.log("res", res);
 
       setBoards([data.board, ...boards]);
     } catch (err) {
