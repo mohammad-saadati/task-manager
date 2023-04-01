@@ -9,8 +9,6 @@ import { useLocation } from "react-router-dom";
 const Login: FC = () => {
   const location = useLocation();
 
-  console.log(location);
-
   const googleAuth = () => {
     window.open(
       `${import.meta.env.VITE_REACT_APP_API_URL}/auth/google/callback`,
