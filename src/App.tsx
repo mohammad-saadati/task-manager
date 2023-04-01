@@ -24,7 +24,7 @@ function App() {
     try {
       const url = `/auth/login/success`;
       const res = await api.get(url);
-      // console.log("**************", res, res.data, res.data.error);
+      
       if (!res.data.error) {
         dispatch(setCurrentUser(res.data.user));
       }
