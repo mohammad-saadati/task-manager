@@ -24,11 +24,10 @@ function App() {
     try {
       const url = `/auth/login/success`;
       const res = await api.get(url);
-      
+
       if (!res.data.error) {
         dispatch(setCurrentUser(res.data.user));
       }
-      // console.log("res.data.user", res.data.user);
     } catch (err) {
       console.log("getUser", err);
     } finally {
