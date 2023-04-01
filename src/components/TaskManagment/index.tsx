@@ -44,7 +44,7 @@ const TaskManagment = () => {
   const onDragEnd = (result: any) => {
     const { destination, source, draggableId, type } = result;
 
-    console.log(destination, source, draggableId, type);
+    // console.log(destination, source, draggableId, type);
 
     if (!destination) return;
 
