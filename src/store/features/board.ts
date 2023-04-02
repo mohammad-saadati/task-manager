@@ -112,7 +112,7 @@ export const boardSlice = createSlice({
         action.payload.sourceIndex,
         1
       )[0];
-      console.log("src", src);
+      // console.log("src", src);
 
       state.columns[index].tasksOrder.splice(
         action.payload.destinationIndex,
