@@ -17,7 +17,7 @@ api.interceptors.response.use(
     console.log("interceptor", error);
     if (error?.response?.status === 403) {
       window.location.href = "/login";
-      console.log("error?.response?.status", error.response.status);
+      // console.log("error?.response?.status", error.response.status);
       return error.response;
     }
     return error.response;
