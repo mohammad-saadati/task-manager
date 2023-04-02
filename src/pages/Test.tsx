@@ -18,7 +18,6 @@ const WrapperComponent = () => {
   const [flag, setFlag] = useState(false);
 
   const computed = useMemo(() => {
-    console.log("usememo called");
     return title;
   }, [title]);
 
