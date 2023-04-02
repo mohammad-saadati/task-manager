@@ -93,7 +93,7 @@ export const boardSlice = createSlice({
       state.columns.splice(action.payload.destinationIndex, 0, src);
     },
     reorderTask: (state, action) => {
-      console.log("reorderTask", action.payload);
+      // console.log("reorderTask", action.payload);
 
       const index = state.columns.findIndex(
         (col) => col._id === action.payload.colId
