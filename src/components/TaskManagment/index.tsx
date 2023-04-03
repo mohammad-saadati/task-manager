@@ -64,7 +64,6 @@ const TaskManagment = () => {
             boardId: destination.droppableId,
             targetIndex: destination.index,
             sourceIndex: source.index,
-            draggableIddraggableId: draggableId,
           });
           const { error } = res.data;
           return error;
