@@ -18,7 +18,7 @@ const Board = () => {
       const url = `/boards/${id}`;
       const res = await api.get(url);
       const { data } = res;
-      // setBoard(data.board);
+      
       dispatcher(initialboard(data.board));
     } catch (error) {}
   }, [id]);
