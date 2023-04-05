@@ -68,10 +68,26 @@ const TaskList: FC<TaskListProps> = ({ colId }) => {
       setLoading(false);
     }
   };
- ;
+  const handleRename = async (id, index) => {
+    if (loading) return;
+    setLoading(true);
+    try {
+      const url = `/tasks/${id}`;
+      const res = await api.put(url, { title: name });
+      const { data } = res;
+      if (!data.error) {
+        dispatcher(updateTask(data.task));
+        setIsEditing(false);
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (!col.tasksOrder.length) return;
-
+  
   return (
     <>
       {col.tasksOrder.map((taskId, index) => {
