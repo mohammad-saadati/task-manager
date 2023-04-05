@@ -170,7 +170,7 @@ const TaskManagment = () => {
               });
 
               return column ? (
-                <Column index={index} colId={column._id} key={column._id} />
+                <Column index={index} colId={column._id} index={index} key={index}/>
               ) : null;
             })}
           </StrictModeDroppableSingle>
