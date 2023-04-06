@@ -87,7 +87,7 @@ const TaskList: FC<TaskListProps> = ({ colId }) => {
   };
 
   if (!col.tasksOrder.length) return;
-  
+
   return (
     <>
       {col.tasksOrder.map((taskId, index) => {
