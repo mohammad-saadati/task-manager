@@ -123,10 +123,9 @@ const TaskManagment = () => {
         try {
           const url = `/tasks/move`;
           const res = await api.put(url, {
-            taskId: draggableId,
-            columnId: destination.droppableId,
-            targetIndex: destination.index,
-            sourceIndex: source.index,
+            draggableId,
+            source,
+            destination,
           });
           const { error } = res.data;
         } catch (err) {
