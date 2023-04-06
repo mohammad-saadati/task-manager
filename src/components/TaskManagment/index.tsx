@@ -94,7 +94,7 @@ const TaskManagment = () => {
         })
       );
 
-      const temp = async () => {
+      const reorder = async () => {
         try {
           const url = `/tasks/reorder`;
           const res = await api.put(url, {
@@ -110,7 +110,7 @@ const TaskManagment = () => {
         } finally {
         }
       };
-      temp();
+      reorder();
     } else {
       dispatcher(
         moveTask({
@@ -119,6 +119,23 @@ const TaskManagment = () => {
           draggableId,
         })
       );
+      const move = async () => {
+        try {
+          const url = `/tasks/move`;
+          const res = await api.put(url, {
+            taskId: draggableId,
+            columnId: destination.droppableId,
+            targetIndex: destination.index,
+            sourceIndex: source.index,
+          });
+          const { error } = res.data;
+        } catch (err) {
+          console.log(err);
+          return;
+        } finally {
+        }
+      };
+      move();
     }
   };
   const openMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -170,7 +187,12 @@ const TaskManagment = () => {
               });
 
               return column ? (
-                <Column index={index} colId={column._id} index={index} key={index}/>
+                <Column
+                  index={index}
+                  colId={column._id}
+                  index={index}
+                  key={index}
+                />
               ) : null;
             })}
           </StrictModeDroppableSingle>
