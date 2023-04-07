@@ -67,7 +67,6 @@ export const boardSlice = createSlice({
         const index = column.tasks.findIndex(
           (task) => task._id === action.payload._id
         );
-        // console.log(index, action);
         if (index !== -1) column.tasks.splice(index, 1, action.payload);
       });
     },
