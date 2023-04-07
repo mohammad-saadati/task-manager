@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface DrawerState {
   drawerIsOpen: boolean;
-  drawerWidth: number
+  drawerWidth: number;
 }
 const initialState: DrawerState = {
   drawerIsOpen: false,
-  drawerWidth: 250
+  drawerWidth: 250,
 };
 
 export const drawerSlice = createSlice({
@@ -14,15 +14,14 @@ export const drawerSlice = createSlice({
   initialState,
   reducers: {
     openDrawer: (state) => {
-      state.drawerIsOpen = true
+      state.drawerIsOpen = true;
     },
     closeDrawer: (state) => {
-      state.drawerIsOpen = false
-    }
+      state.drawerIsOpen = false;
+    },
   },
 });
 
-
-export const { openDrawer, closeDrawer } = drawerSlice.actions
+export const { openDrawer, closeDrawer } = drawerSlice.actions;
 
 export default drawerSlice.reducer;
