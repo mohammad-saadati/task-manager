@@ -4,15 +4,6 @@ interface propTypes {
   title: string[];
 }
 
-const Bache = memo(
-  ({ title }: propTypes) => {
-    return <div>{title}</div>;
-  },
-  (prev, next) => {
-    return prev.title.length === next.title.length;
-  }
-);
-
 const WrapperComponent = () => {
   const [title, setTitle] = useState(["sample test"]);
   const [flag, setFlag] = useState(false);
