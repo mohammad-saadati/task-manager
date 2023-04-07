@@ -55,7 +55,6 @@ export const boardSlice = createSlice({
       state.columns.splice(index, 1, action.payload);
     },
     addTasks: (state, action) => {
-      // state.columns.tasksOrder.push(action.payload);
       const index = state.columns.findIndex(
         (col) => col._id === action.payload.colId
       );
