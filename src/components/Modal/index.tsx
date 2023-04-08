@@ -5,7 +5,12 @@ const Modal: FC = () => {
   const modalIsOpen = useAppSelector((state) => state.modal.modalIsOpen);
 
   if (modalIsOpen) {
-    return <div>this is modal component {modalIsOpen}</div>;
+    return (
+      <SimpleDialog
+        open={modalIsOpen}
+        onClose={handleClose}
+      />
+    );
   } else {
     return <></>;
   }
