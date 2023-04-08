@@ -85,6 +85,9 @@ const TaskList: FC<TaskListProps> = ({ colId }) => {
       setLoading(false);
     }
   };
+  const showTaskModal = (task) => {
+    showModal(openModal("me"));
+  };
 
   if (!col.tasksOrder.length) return;
 
@@ -105,7 +108,10 @@ const TaskList: FC<TaskListProps> = ({ colId }) => {
                 {...provided.dragHandleProps}
                 ref={provided.innerRef}
               >
-                <div className="flex justify-between text-sm">
+                <div
+                  className="flex justify-between text-sm"
+                  onClick={() => showTaskModal(task)}
+                >
                   {isEditing && editingIndex === index ? (
                     <TextField
                       label=""
@@ -117,6 +123,7 @@ const TaskList: FC<TaskListProps> = ({ colId }) => {
                       onKeyPress={(e) =>
                         e.key === "Enter" && handleRename(task._id, index)
                       }
+                      onClick={(e) => e.stopPropagation()}
                     />
                   ) : (
                     task.title
