@@ -2,6 +2,7 @@ import { FC, ReactNode } from "react";
 
 import Sidebar from "../components/Sidebar";
 import Appbar from "../components/Appbar";
+import Modal from "../components/Modal";
 
 import { useLocation } from "react-router-dom";
 
@@ -22,6 +23,7 @@ const defaultLayout: FC<Props> = ({ children }) => {
       ) : null}
 
       <div className="py-20 px-6">{children}</div>
+      <Modal />
     </div>
   );
 };
