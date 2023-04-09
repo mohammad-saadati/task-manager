@@ -11,7 +11,12 @@ const Modal: FC = () => {
       <Dialog open={modalIsOpen}>
         <ModalTitle>Task detail</ModalTitle>
         <DialogContent dividers>
-          <Typography gutterBottom>task comment</Typography>
+          <Typography gutterBottom>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
+            cupiditate nisi architecto placeat quae adipisci beatae similique
+            ratione error! Praesentium ullam saepe ipsa nostrum voluptates
+            eveniet vel quaerat maxime at.
+          </Typography>
         </DialogContent>
       </Dialog>
     );
