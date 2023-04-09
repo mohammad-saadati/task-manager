@@ -1,11 +1,28 @@
 import React from "react";
-import DialogTitle from "@mui/material/DialogTitle";
+import { DialogTitle, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { useAppDispatch } from "../../store/hooks";
+import { closeModal } from "../../store/features/modal";
 
 interface DialogTitleProps {
   children?: React.ReactElement;
   onClose: () => void;
 }
 const ModalTitle = (props: DialogTitleProps) => {
-  const { children, onClose, ...other } = props;
-  return <DialogTitle {...other}>{children}</DialogTitle>;
+  const { children, ...other } = props;
+  const dispatch = useAppDispatch();
+
+  const closeTaskModal = () => {
+    dispatch(closeModal());
+  };
+
+  return (
+    <DialogTitle {...other}>
+      {children}
+      <IconButton onClick={closeTaskModal}>
+        <CloseIcon />
+      </IconButton>
+    </DialogTitle>
+  );
 };
+export default ModalTitle;
