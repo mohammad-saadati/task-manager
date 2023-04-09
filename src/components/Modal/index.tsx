@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useAppSelector } from "../../store/hooks";
-import { Dialog } from "@mui/material";
+import { Dialog, DialogContent, Typography } from "@mui/material";
 import ModalTitle from "./ModalTitle";
 
 const Modal: FC = () => {
@@ -10,6 +10,9 @@ const Modal: FC = () => {
     return (
       <Dialog open={modalIsOpen}>
         <ModalTitle>Task detail</ModalTitle>
+        <DialogContent dividers>
+          <Typography gutterBottom>task comment</Typography>
+        </DialogContent>
       </Dialog>
     );
   } else {
