@@ -17,7 +17,14 @@ const ModalTitle = (props: DialogTitleProps) => {
   };
 
   return (
-    <DialogTitle {...other}>
+    <DialogTitle
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+      {...other}
+    >
       {children}
       <IconButton onClick={closeTaskModal}>
         <CloseIcon />
