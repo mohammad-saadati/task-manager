@@ -7,6 +7,7 @@ import Board from "./pages/Board";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NoMatch from "./pages/NoMatch";
+import Disconnected from "./pages/Disconnected";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { setCurrentUser } from "./store/features/currentUser";
 
@@ -17,7 +18,12 @@ function App() {
   const dispatch = useAppDispatch();
 
   const getUser = useCallback(async () => {
-    if (location.pathname === "/login" || loading) return;
+    if (
+      location.pathname === "/login" ||
+      location.pathname === "/disconnected" ||
+      loading
+    )
+      return;
 
     setLoading(true);
 
@@ -65,6 +71,7 @@ function App() {
             element={currentUser ? <Signup /> : <Navigate to="/login" />}
           />
           <Route path="/login" element={<Login />} />
+          <Route path="/disconnected" element={<Disconnected />} />
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </DefaultLayout>
