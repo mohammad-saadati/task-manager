@@ -3,7 +3,7 @@ import { Droppable, DroppableProps } from "react-beautiful-dnd";
 
 interface columnData extends PropsWithChildren {}
 
-const StrictModeDroppable = ({ id, children }: columnData) => {
+const StrictModeDroppableSingle = ({ id, children }: columnData) => {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
@@ -34,4 +34,4 @@ const StrictModeDroppable = ({ id, children }: columnData) => {
   );
 };
 
-export default StrictModeDroppable;
+export default StrictModeDroppableSingle;
