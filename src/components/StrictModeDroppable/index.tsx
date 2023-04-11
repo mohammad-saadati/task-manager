@@ -129,7 +129,7 @@ const StrictModeDroppable = ({
     }
   };
 
-  return (
+  return column ? (
     <Draggable draggableId={column._id} index={index}>
       {(provided) => (
         <div
@@ -226,7 +226,7 @@ const StrictModeDroppable = ({
         </div>
       )}
     </Draggable>
-  );
+  ) : null;
 };
 
 export default StrictModeDroppable;
