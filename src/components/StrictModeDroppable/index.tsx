@@ -23,14 +23,22 @@ import {
 } from "../../store/features/board";
 
 interface columnData {
-  // tasks: { id: string; content: string }[];
-  // column: Column;
   backgroundCallback: (isDraggingOver: boolean) => void;
   index: number;
+  _id: string;
+  title: string;
+}
+interface StrictModeDroppableProps {
   id: string;
+  index: number;
+  backgroundCallback: (isDraggingOver: boolean) => void;
 }
 
-const StrictModeDroppable = ({ backgroundCallback, index, id }: columnData) => {
+const StrictModeDroppable = ({
+  backgroundCallback,
+  index,
+  id,
+}: StrictModeDroppableProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [renameAnchorEl, setRenameAnchorEl] = useState<null | HTMLElement>(
     null
@@ -43,7 +51,7 @@ const StrictModeDroppable = ({ backgroundCallback, index, id }: columnData) => {
   const [loading, setLoading] = useState(false);
   const openRenameMenu = Boolean(renameAnchorEl);
   // store
-  const column = useAppSelector((state) =>
+  const column: columnData = useAppSelector((state) =>
     state.board.columns.find((col) => col._id === id)
   );
   const dispatcher = useAppDispatch();
