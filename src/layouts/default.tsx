@@ -15,7 +15,8 @@ const defaultLayout: FC<Props> = ({ children }) => {
 
   return (
     <div>
-      {location.pathname !== "/login" ? (
+      {location.pathname !== "/login" &&
+      location.pathname !== "/disconnected" ? (
         <>
           <Appbar />
           <Sidebar />
