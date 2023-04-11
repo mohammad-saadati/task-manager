@@ -15,6 +15,13 @@ api.interceptors.response.use(
   function (error) {
     // error includes CORS erros
     console.log("interceptor", error);
+    if (
+      error.name === "AxiosError" &&
+      !location.href.includes("disconnected")
+    ) {
+      window.location.href = "/disconnected";
+      window.axiosError = error.name;
+    }
     if (error?.response?.status === 403) {
       window.location.href = "/login";
       console.log("error?.response?.status", error.response.status);
