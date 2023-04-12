@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useAppSelector } from "../../store/hooks";
-import { Dialog, DialogContent, Typography } from "@mui/material";
+import { Dialog, DialogContent, TextField, Typography } from "@mui/material";
 import ModalTitle from "./ModalTitle";
 
 const Modal: FC = () => {
@@ -17,6 +17,13 @@ const Modal: FC = () => {
             ratione error! Praesentium ullam saepe ipsa nostrum voluptates
             eveniet vel quaerat maxime at.
           </Typography>
+          <TextField
+            id="outlined-required"
+            label=""
+            placeholder="Write a comment"
+            multiline
+            className="w-full"
+          />
         </DialogContent>
       </Dialog>
     );
