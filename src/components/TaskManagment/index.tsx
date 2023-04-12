@@ -169,7 +169,7 @@ const TaskManagment = () => {
     }
   };
 
-  return (
+  return boardData._id ? (
     <div className="flex flex-col items-start font-semibold text-2xl">
       <div>{boardData.title}</div>
       <div className="flex">
@@ -218,7 +218,7 @@ const TaskManagment = () => {
         </DragDropContext>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default TaskManagment;
