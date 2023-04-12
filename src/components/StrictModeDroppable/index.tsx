@@ -129,7 +129,7 @@ const StrictModeDroppable = ({
     }
   };
 
-  return column ? (
+  return column._id ? (
     <Draggable draggableId={column._id} index={index}>
       {(provided) => (
         <div
