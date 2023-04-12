@@ -20,7 +20,6 @@ api.interceptors.response.use(
       !location.href.includes("disconnected")
     ) {
       window.location.href = "/disconnected";
-      window.axiosError = error.name;
     }
     if (error?.response?.status === 403) {
       window.location.href = "/login";
