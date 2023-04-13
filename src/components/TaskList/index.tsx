@@ -38,8 +38,6 @@ const TaskList: FC<TaskListProps> = ({ colId }) => {
     return col;
   });
 
-
-  
   const handleModal = (task: any) => {
     showModal(openModal("me"));
     setCurrentTask({ ...task });
