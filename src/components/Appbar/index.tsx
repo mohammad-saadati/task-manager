@@ -46,7 +46,7 @@ const Appbar = () => {
             <div>{user.username}</div>
           </Typography>
 
-          {Object.keys(user).length !== 0 ? 
+          {Object.keys(user).length !== 0 ? (
             <Button
               sx={{ color: "white" }}
               onClick={logout}
@@ -55,7 +55,7 @@ const Appbar = () => {
             >
               log out
             </Button>
-           : null}
+          ) : null}
         </Toolbar>
       </AppBar>
     </Box>
