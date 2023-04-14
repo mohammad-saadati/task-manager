@@ -11,6 +11,7 @@ import ModalTitle from "./ModalTitle";
 
 const Modal: FC = () => {
   const modalIsOpen = useAppSelector((state) => state.modal.modalIsOpen);
+  const modalData = useAppSelector((state) => state.modal.data);
   const [comment, setComment] = useState(null);
 
   if (modalIsOpen) {
@@ -18,12 +19,7 @@ const Modal: FC = () => {
       <Dialog open={modalIsOpen}>
         <ModalTitle title="Task detail"></ModalTitle>
         <DialogContent dividers>
-          <Typography gutterBottom>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
-            cupiditate nisi architecto placeat quae adipisci beatae similique
-            ratione error! Praesentium ullam saepe ipsa nostrum voluptates
-            eveniet vel quaerat maxime at.
-          </Typography>
+          <Typography gutterBottom>{modalData.description}</Typography>
           <TextField
             id="outlined-required"
             label=""
