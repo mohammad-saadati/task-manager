@@ -6,11 +6,11 @@ import { closeModal } from "../../store/features/modal";
 
 interface DialogTitleProps {
   children?: React.ReactElement;
-  title: Streing;
-  onClose: () => void;
+  title: string;
+  onClose?: () => void;
 }
 const ModalTitle = (props: DialogTitleProps) => {
-  const { children, ...other } = props;
+  const { children, title, ...other } = props;
   const dispatch = useAppDispatch();
 
   const closeTaskModal = () => {
