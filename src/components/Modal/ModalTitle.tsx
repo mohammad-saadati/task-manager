@@ -6,6 +6,7 @@ import { closeModal } from "../../store/features/modal";
 
 interface DialogTitleProps {
   children?: React.ReactElement;
+  title: Streing;
   onClose: () => void;
 }
 const ModalTitle = (props: DialogTitleProps) => {
@@ -25,6 +26,7 @@ const ModalTitle = (props: DialogTitleProps) => {
       }}
       {...other}
     >
+      {title}
       {children}
       <IconButton onClick={closeTaskModal}>
         <CloseIcon />
