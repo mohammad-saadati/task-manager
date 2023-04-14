@@ -26,7 +26,6 @@ const TaskList: FC<TaskListProps> = ({ colId }) => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const showModal = useAppDispatch();
-  const [currentTask, setCurrentTask] = useState({});
   const [editingIndex, setEditingIndex] = useState<null | Number>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editingId, setEditingId] = useState(false);
@@ -38,10 +37,6 @@ const TaskList: FC<TaskListProps> = ({ colId }) => {
     return col;
   });
 
-  const handleModal = (task: any) => {
-    showModal(openModal("me"));
-    setCurrentTask({ ...task });
-  };
   const handleContextMenu = (e: React.MouseEvent<HTMLElement>, task, index) => {
     e.preventDefault();
     e.stopPropagation();
@@ -86,7 +81,7 @@ const TaskList: FC<TaskListProps> = ({ colId }) => {
     }
   };
   const showTaskModal = (task) => {
-    showModal(openModal("me"));
+    showModal(openModal(task));
   };
 
   if (!col.tasksOrder.length) return;
@@ -100,7 +95,6 @@ const TaskList: FC<TaskListProps> = ({ colId }) => {
           <Draggable draggableId={task._id} index={index} key={task._id}>
             {(provided, snapshot) => (
               <div
-                onClick={(e) => handleModal(task)}
                 className={`shadow-task p-2 mb-2 hover:bg-cultured bg-white cursor-pointer ${
                   snapshot.isDragging ? "bg-cultured" : ""
                 }`}
