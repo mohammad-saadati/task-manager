@@ -1,6 +1,12 @@
 import { FC, useState } from "react";
 import { useAppSelector } from "../../store/hooks";
-import { Dialog, DialogContent, TextField, Typography } from "@mui/material";
+import {
+  Dialog,
+  DialogContent,
+  TextField,
+  Typography,
+  Button,
+} from "@mui/material";
 import ModalTitle from "./ModalTitle";
 
 const Modal: FC = () => {
@@ -28,6 +34,9 @@ const Modal: FC = () => {
               setComment(e.target.value);
             }}
           />
+          <Button variant="contained" disabled={!comment} sx={{ mt: 1 }}>
+            Save
+          </Button>
         </DialogContent>
       </Dialog>
     );
