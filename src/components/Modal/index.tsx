@@ -5,7 +5,7 @@ import ModalTitle from "./ModalTitle";
 
 const Modal: FC = () => {
   const modalIsOpen = useAppSelector((state) => state.modal.modalIsOpen);
-  const comment = useState(null);
+  const [comment, setComment] = useState(null);
 
   if (modalIsOpen) {
     return (
@@ -25,7 +25,7 @@ const Modal: FC = () => {
             multiline
             className="w-full"
             onChange={(e) => {
-              setName(e.target.value);
+              setComment(e.target.value);
             }}
           />
         </DialogContent>
