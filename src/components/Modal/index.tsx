@@ -1,10 +1,11 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useAppSelector } from "../../store/hooks";
 import { Dialog, DialogContent, TextField, Typography } from "@mui/material";
 import ModalTitle from "./ModalTitle";
 
 const Modal: FC = () => {
   const modalIsOpen = useAppSelector((state) => state.modal.modalIsOpen);
+  const comment = useState(null);
 
   if (modalIsOpen) {
     return (
@@ -23,6 +24,9 @@ const Modal: FC = () => {
             placeholder="Write a comment"
             multiline
             className="w-full"
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
           />
         </DialogContent>
       </Dialog>
