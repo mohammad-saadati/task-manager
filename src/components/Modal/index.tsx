@@ -10,7 +10,7 @@ const Modal: FC = () => {
   if (modalIsOpen) {
     return (
       <Dialog open={modalIsOpen}>
-        <ModalTitle>Task detail</ModalTitle>
+        <ModalTitle title="Task detail"></ModalTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
