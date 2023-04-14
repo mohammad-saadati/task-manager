@@ -15,9 +15,11 @@ export const modalSlice = createSlice({
   reducers: {
     openModal: (state, action) => {
       state.modalIsOpen = true;
+      state.data = action.payload;
     },
     closeModal: (state) => {
       state.modalIsOpen = false;
+      state.data = null;
     },
   },
 });
