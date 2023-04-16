@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import api from "./utils/axios";
 import DefaultLayout from "./layouts/default";
 import Home from "./pages/Home";
-import BundledEditor from "./pages/BundledEditor";
+import Test from "./pages/Test";
 import Board from "./pages/Board";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -67,7 +67,7 @@ function App() {
             path="/test-editor"
             element={
               currentUser ? (
-                <BundledEditor />
+                <Test />
               ) : (
                 <Navigate to="/login" />
               )
