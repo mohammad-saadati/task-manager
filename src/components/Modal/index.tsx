@@ -19,7 +19,12 @@ const Modal: FC = () => {
       <Dialog open={modalIsOpen}>
         <ModalTitle title="Task detail"></ModalTitle>
         <DialogContent dividers>
-          <Typography gutterBottom>Descrition</Typography>
+          <Typography gutterBottom>
+            Descrition
+            <Button sx={{ ml: 2 }} size="small" variant="contained">
+              Edit
+            </Button>
+          </Typography>
           <Typography gutterBottom>{modalData.description}</Typography>
           <TextField
             id="outlined-required"
