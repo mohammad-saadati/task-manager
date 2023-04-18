@@ -13,6 +13,7 @@ const Modal: FC = () => {
   const modalIsOpen = useAppSelector((state) => state.modal.modalIsOpen);
   const modalData = useAppSelector((state) => state.modal.data);
   const [comment, setComment] = useState(null);
+  const [editMode, setEditMode] = useState(false);
 
   if (modalIsOpen) {
     return (
@@ -25,7 +26,10 @@ const Modal: FC = () => {
               Edit
             </Button>
           </Typography>
-          <Typography gutterBottom>{modalData.description}</Typography>
+          {editMode ? (
+            <Typography gutterBottom>{modalData.description}</Typography>
+          ) : null}
+
           <TextField
             id="outlined-required"
             label=""
