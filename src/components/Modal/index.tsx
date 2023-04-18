@@ -19,6 +19,7 @@ const Modal: FC = () => {
       <Dialog open={modalIsOpen}>
         <ModalTitle title="Task detail"></ModalTitle>
         <DialogContent dividers>
+          <Typography gutterBottom>Descrition</Typography>
           <Typography gutterBottom>{modalData.description}</Typography>
           <TextField
             id="outlined-required"
