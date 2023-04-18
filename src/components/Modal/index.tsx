@@ -22,7 +22,12 @@ const Modal: FC = () => {
         <DialogContent dividers>
           <Typography gutterBottom>
             Descrition
-            <Button sx={{ ml: 2 }} size="small" variant="contained">
+            <Button
+              sx={{ ml: 2 }}
+              size="small"
+              variant="contained"
+              onClick={() => setEditMode(true)}
+            >
               Edit
             </Button>
           </Typography>
