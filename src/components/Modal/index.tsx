@@ -27,8 +27,10 @@ const Modal: FC = () => {
             </Button>
           </Typography>
           {editMode ? (
+            <div>edit mode</div>
+          ) : (
             <Typography gutterBottom>{modalData.description}</Typography>
-          ) : null}
+          )}
 
           <TextField
             id="outlined-required"
