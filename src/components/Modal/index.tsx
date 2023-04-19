@@ -10,7 +10,10 @@ import {
 import ModalTitle from "./ModalTitle";
 
 const Modal: FC = () => {
-
+  const modalIsOpen = useAppSelector((state) => state.modal.modalIsOpen);
+  const modalData = useAppSelector((state) => state.modal.data);
+  const [comment, setComment] = useState(null);
+  const [editMode, setEditMode] = useState(false);
 
   if (modalIsOpen) {
     return (
