@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import TaskList from "../TaskList";
 import StrictModeDroppable from "../StrictModeDroppable";
 // types
-import { Column as ColumnType } from "../../mock/initialData";
+// import { Column as ColumnType } from "../../mock/initialData";
 interface columnData {
   index: number;
   colId: string;
