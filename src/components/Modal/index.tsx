@@ -15,14 +15,14 @@ const Modal: FC = () => {
   const [comment, setComment] = useState(null);
   const [editMode, setEditMode] = useState(false);
 
-  // if (modalIsOpen) {
+  if (modalIsOpen) {
     return (
       <Dialog open={modalIsOpen}>
         <ModalTitle title="Task detail"></ModalTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
             Descrition
-
+            
             <Button
               sx={{ ml: 2 }}
               size="small"
