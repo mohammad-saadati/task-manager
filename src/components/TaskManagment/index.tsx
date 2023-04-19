@@ -36,10 +36,8 @@ const TaskManagment = () => {
   // const { data, error, isLoading } = useGetCurrentUserQuery("");
   const dispatcher = useAppDispatch();
   const boardData = useAppSelector((state) => state.board);
-  // if (!isLoading) er(setCurrentUser(data));
 
   const [enabled, setEnabled] = useState(false);
-  // const [boardData, setBoardData] = useState(initialData2);
 
   const onDragEnd = (result: any) => {
     const { destination, source, draggableId, type } = result;
