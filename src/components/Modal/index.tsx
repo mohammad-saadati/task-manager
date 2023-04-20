@@ -57,7 +57,11 @@ const Modal: FC = () => {
             </Button>
           </Typography>
           {editMode ? (
-            <div>edit mode</div>
+            <div>
+              <Slate editor={editor} value={initialValue}>
+                <Editable />
+              </Slate>
+            </div>
           ) : (
             <Typography gutterBottom>{modalData.description}</Typography>
           )}
