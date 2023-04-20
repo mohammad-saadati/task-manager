@@ -8,8 +8,6 @@ import {
   Button,
 } from "@mui/material";
 import ModalTitle from "./ModalTitle";
-import { Editor, EditorState } from "draft-js";
-import 'draft-js/dist/Draft.css';
 
 const Modal: FC = () => {
   const modalIsOpen = useAppSelector((state) => state.modal.modalIsOpen);
