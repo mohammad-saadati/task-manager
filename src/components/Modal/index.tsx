@@ -8,6 +8,8 @@ import {
   Button,
 } from "@mui/material";
 import ModalTitle from "./ModalTitle";
+import { Editor, EditorState } from "draft-js";
+import 'draft-js/dist/Draft.css';
 
 const Modal: FC = () => {
   const modalIsOpen = useAppSelector((state) => state.modal.modalIsOpen);
@@ -22,7 +24,6 @@ const Modal: FC = () => {
         <DialogContent dividers>
           <Typography gutterBottom>
             Descrition
-            
             <Button
               sx={{ ml: 2 }}
               size="small"
