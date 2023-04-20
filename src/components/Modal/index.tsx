@@ -8,6 +8,9 @@ import {
   Button,
 } from "@mui/material";
 import ModalTitle from "./ModalTitle";
+// slatejs editor
+import { createEditor } from "slate";
+import { Slate, Editable, withReact } from "slate-react";
 
 const Modal: FC = () => {
   const modalIsOpen = useAppSelector((state) => state.modal.modalIsOpen);
