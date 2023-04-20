@@ -17,6 +17,8 @@ const Modal: FC = () => {
   const modalData = useAppSelector((state) => state.modal.data);
   const [comment, setComment] = useState(null);
   const [editMode, setEditMode] = useState(false);
+  // slatejs
+  const [editor] = useState(() => withReact(createEditor()));
 
   if (modalIsOpen) {
     return (
