@@ -32,6 +32,13 @@ const initialValue = [
   },
 ];
 
+const CodeElement = (props) => {
+  return (
+    <pre {...props.attributes}>
+      <code>{props.children}</code>
+    </pre>
+  );
+};
 const Modal: FC = () => {
   const modalIsOpen = useAppSelector((state) => state.modal.modalIsOpen);
   const modalData = useAppSelector((state) => state.modal.data);
