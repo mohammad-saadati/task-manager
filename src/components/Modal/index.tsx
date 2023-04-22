@@ -39,6 +39,9 @@ const CodeElement = (props) => {
     </pre>
   );
 };
+const DefaultElement = (props) => {
+  return <p {...props.attributes}>{props.children}</p>;
+};
 const Modal: FC = () => {
   const modalIsOpen = useAppSelector((state) => state.modal.modalIsOpen);
   const modalData = useAppSelector((state) => state.modal.data);
