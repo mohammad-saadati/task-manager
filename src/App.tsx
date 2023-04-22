@@ -7,6 +7,7 @@ import Board from "./pages/Board";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NoMatch from "./pages/NoMatch";
+import Test from "./pages/Test";
 import Disconnected from "./pages/Disconnected";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { setCurrentUser } from "./store/features/currentUser";
@@ -62,6 +63,7 @@ function App() {
               )
             }
           />
+          <Route path="/test" element={<Test />} />
           <Route
             path="/board/:id"
             element={currentUser ? <Board /> : <Navigate to="/login" />}
