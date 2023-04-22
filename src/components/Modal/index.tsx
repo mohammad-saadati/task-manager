@@ -70,6 +70,7 @@ const Modal: FC = () => {
             <div>
               <Slate editor={editor} value={initialValue}>
                 <Editable
+                  renderElement={renderElement}
                   onKeyDown={(event) => {
                     if (event.key === "&") {
                       // Prevent the ampersand character from being inserted.
