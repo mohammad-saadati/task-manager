@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useCallback } from "react";
 import { useAppSelector } from "../../store/hooks";
 import {
   Dialog,
@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import ModalTitle from "./ModalTitle";
 // slatejs editor
-import { createEditor } from "slate";
+import { createEditor, Transforms, Editor, Text } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
 // editor types
 import { BaseEditor, Descendant } from "slate";
@@ -42,6 +42,18 @@ const CodeElement = (props) => {
 const DefaultElement = (props) => {
   return <p {...props.attributes}>{props.children}</p>;
 };
+// formati
+const Leaf = (props) => {
+  return (
+    <span
+      {...props.attributes}
+      style={{ fontWeight: props.leaf.bold ? "bold" : "normal" }}
+    >
+      {props.children}
+    </span>
+  );
+};
+
 const Modal: FC = () => {
   const modalIsOpen = useAppSelector((state) => state.modal.modalIsOpen);
   const modalData = useAppSelector((state) => state.modal.data);
@@ -49,6 +61,15 @@ const Modal: FC = () => {
   const [editMode, setEditMode] = useState(false);
   // slatejs
   const [editor] = useState(() => withReact(createEditor()));
+  //
+  const renderElement = useCallback((props) => {
+    switch (props.element.type) {
+      case "code":
+        return <CodeElement {...props} />;
+      default:
+        return <DefaultElement {...props} />;
+    }
+  }, []);
 
   if (modalIsOpen) {
     return (
@@ -70,13 +91,39 @@ const Modal: FC = () => {
             <div>
               <Slate editor={editor} value={initialValue}>
                 <Editable
+                  renderLeaf={Leaf}
                   renderElement={renderElement}
                   onKeyDown={(event) => {
-                    if (event.key === "&") {
-                      // Prevent the ampersand character from being inserted.
-                      event.preventDefault();
-                      // Execute the `insertText` method when the event occurs.
-                      editor.insertText("and");
+                    if (!event.ctrlKey) {
+                      return;
+                    }
+                    switch (event.key) {
+                      // When "`" is pressed, keep our existing code block logic.
+                      case "`": {
+                        event.preventDefault();
+                        const [match] = Editor.nodes(editor, {
+                          match: (n) => n.type === "code",
+                        });
+                        Transforms.setNodes(
+                          editor,
+                          { type: match ? "paragraph" : "code" },
+                          { match: (n) => Editor.isBlock(editor, n) }
+                        );
+                        break;
+                      }
+
+                      // When "B" is pressed, bold the text in the selection.
+                      case "b": {
+                        event.preventDefault();
+                        Transforms.setNodes(
+                          editor,
+                          { bold: true },
+                          // Apply it to text nodes, and split the text node up if the
+                          // selection is overlapping only part of it.
+                          { match: (n) => Text.isText(n), split: true }
+                        );
+                        break;
+                      }
                     }
                   }}
                 />
