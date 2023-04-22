@@ -59,7 +59,11 @@ const Modal: FC = () => {
           {editMode ? (
             <div>
               <Slate editor={editor} value={initialValue}>
-                <Editable />
+                <Editable
+                  onKeyDown={(event) => {
+                    console.log(event.key);
+                  }}
+                />
               </Slate>
             </div>
           ) : (
