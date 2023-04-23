@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NoMatch from "./pages/NoMatch";
 import Test from "./pages/Test";
+import EditorTest from "./pages/EditorTest";
 import Disconnected from "./pages/Disconnected";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { setCurrentUser } from "./store/features/currentUser";
@@ -63,6 +64,7 @@ function App() {
               )
             }
           />
+          <Route path="/test-editor" element={<EditorTest />} />
           <Route path="/test" element={<Test />} />
           <Route
             path="/board/:id"
