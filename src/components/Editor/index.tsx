@@ -8,7 +8,7 @@ import { withHistory } from "slate-history";
 import initialValue from "./initialValue";
 
 const RichTextEditor = () => {
-  // const renderElement = useCallback((props) => <Element {...props} />, []);
+  const renderElement = useCallback((props) => <Element {...props} />, []);
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
 
   return (
