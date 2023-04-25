@@ -13,3 +13,22 @@ type ElementProps = {
 };
 
 const Element = ({ attributes, children, element }: ElementProps) => {
+  const style = { textAlign: element.align };
+  switch (element.type) {
+    case "block-quote":
+      return (
+        <blockquote style={style} {...attributes}>
+          {children}
+        </blockquote>
+      );
+
+    default:
+      return (
+        <p style={style} {...attributes}>
+          {children}
+        </p>
+      );
+  }
+};
+
+export default Element;
