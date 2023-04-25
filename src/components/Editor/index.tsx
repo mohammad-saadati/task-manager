@@ -6,6 +6,8 @@ import { Editable, withReact, Slate } from "slate-react";
 import { withHistory } from "slate-history";
 //
 import initialValue from "./initialValue";
+//
+import Element from "./Element";
 
 const RichTextEditor = () => {
   const renderElement = useCallback((props) => <Element {...props} />, []);
