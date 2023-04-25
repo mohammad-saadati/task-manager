@@ -3,7 +3,7 @@ type Attributes = {
   className?: string;
 };
 type Element = {
-  type?: "block-quote" | string;
+  type?: string;
   align?: string;
 };
 type ElementProps = {
