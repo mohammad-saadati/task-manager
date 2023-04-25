@@ -21,7 +21,12 @@ const Element = ({ attributes, children, element }: ElementProps) => {
           {children}
         </blockquote>
       );
-
+    case "bulleted-list":
+      return (
+        <ul style={style} {...attributes}>
+          {children}
+        </ul>
+      );
     default:
       return (
         <p style={style} {...attributes}>
