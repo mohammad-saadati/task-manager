@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState, useRef, useMemo, memo } from "react";
 
-const Child = memo((value) => {
+const Child = ({ value, children }) => {
   useEffect(() => {
     console.log("child effect");
   }, [value]);
-
-  return <div>child</div>;
-});
+  children = <h1 className="font-black">changed</h1>;
+  return <div>{children}</div>;
+};
 
 const Test = () => {
   const [s, setS] = useState(0);
@@ -43,7 +43,9 @@ const Test = () => {
     <div className="mt-32" onClick={main}>
       {s}
       ********************************1010
-      <Child value={test10} />
+      <Child value={test10}>
+        <div>child of child</div>
+      </Child>
     </div>
   );
 };
