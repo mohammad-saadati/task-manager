@@ -2,6 +2,7 @@ import { useMemo, useCallback } from "react";
 import { Toolbar } from "./EditorMenu";
 // slate
 import { createEditor } from "slate";
+import { createEditor, Editor } from "slate";
 import { Editable, withReact, Slate } from "slate-react";
 import { withHistory } from "slate-history";
 //
@@ -43,4 +44,13 @@ const RichTextEditor = () => {
   );
 };
 
+const toggleMark = (editor, format) => {
+  const isActive = isMarkActive(editor, format);
+
+  if (isActive) {
+    Editor.removeMark(editor, format);
+  } else {
+    Editor.addMark(editor, format, true);
+  }
+};
 export default RichTextEditor;
