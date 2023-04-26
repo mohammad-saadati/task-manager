@@ -18,7 +18,21 @@ const RichTextEditor = () => {
   return (
     <Slate editor={editor} value={initialValue}>
       <Toolbar></Toolbar>
-      <Editable renderElement={renderElement} renderLeaf={renderLeaf} />
+      <Editable
+        renderElement={renderElement}
+        renderLeaf={renderLeaf}
+        placeholder="Enter some rich text…"
+        spellCheck
+        onKeyDown={(event) => {
+          for (const hotkey in HOTKEYS) {
+            if (isHotKey(hotkey, event as any)) {
+              event.preventDefault();
+              const mark = HOTKEYS[hotkey];
+              toggleMark(editor, mark);
+            }
+          }
+        }}
+      />
     </Slate>
   );
 };
