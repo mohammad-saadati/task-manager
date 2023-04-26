@@ -31,7 +31,7 @@ const RichTextEditor = () => {
         spellCheck
         onKeyDown={(event) => {
           for (const hotkey in HOTKEYS) {
-            if (isHotKey(hotkey, event as any)) {
+            if (isHotkey(hotkey, event as any)) {
               event.preventDefault();
               const mark = HOTKEYS[hotkey];
               toggleMark(editor, mark);
