@@ -9,7 +9,13 @@ import initialValue from "./initialValue";
 //
 import Element from "./Element";
 import Leaf from "./Leaf";
-
+//
+const HOTKEYS = {
+  "mod+b": "bold",
+  "mod+i": "italic",
+  "mod+u": "underline",
+  "mod+`": "code",
+};
 const RichTextEditor = () => {
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
