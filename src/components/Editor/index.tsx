@@ -1,7 +1,6 @@
 import { useMemo, useCallback } from "react";
 import { Toolbar } from "./EditorMenu";
 // slate
-import { createEditor } from "slate";
 import { createEditor, Editor } from "slate";
 import { Editable, withReact, Slate } from "slate-react";
 import { withHistory } from "slate-history";
@@ -10,6 +9,8 @@ import initialValue from "./initialValue";
 //
 import Element from "./Element";
 import Leaf from "./Leaf";
+//
+import isHotkey from "is-hotkey";
 //
 const HOTKEYS = {
   "mod+b": "bold",
@@ -43,9 +44,6 @@ const RichTextEditor = () => {
     </Slate>
   );
 };
-
-const toggleMark = (editor, format) => {
-  const isActive = isMarkActive(editor, format);
 
   if (isActive) {
     Editor.removeMark(editor, format);
