@@ -12,6 +12,8 @@ import Leaf from "./Leaf";
 //
 import isHotkey from "is-hotkey";
 //
+import { toggleMark } from "./helpers";
+
 const HOTKEYS = {
   "mod+b": "bold",
   "mod+i": "italic",
@@ -45,10 +47,4 @@ const RichTextEditor = () => {
   );
 };
 
-  if (isActive) {
-    Editor.removeMark(editor, format);
-  } else {
-    Editor.addMark(editor, format, true);
-  }
-};
 export default RichTextEditor;
